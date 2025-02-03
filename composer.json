@@ -1,0 +1,27 @@
+{
+    "name": "webbundels/essentials",
+    "description": "Webbundels Essentials",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick van Leeuwen",
+            "email": "nick@webbundels.nl"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "^9.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webbundels\\Essentials\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webbundels\\Essentials\\EssentialsServiceProvider"
+            ]
+        }
+    }
+}
