@@ -40,6 +40,17 @@ body .edit-view {
     padding: 100px 0;
 }
 
+body .error-box {
+    color: #ba3939;
+    background: #ffe0e0;
+    border: 1px solid #a33a3a;
+    border-radius: 5px;
+    font-size: x-large;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 body .edit-view input {
     font-size: 2rem;
     margin-bottom: 20px;

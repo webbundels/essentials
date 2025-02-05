@@ -24,7 +24,7 @@ class DocumentationController extends Controller
     public function index(ViewDocumentationRequest $request)
     {
         $documentationChapters = DocumentationChapter::all();
-        
+
         return view('EssentialsPackage::documentation.index', compact('documentationChapters'));
     }
 
@@ -40,8 +40,13 @@ class DocumentationController extends Controller
         $data = $request->all();
         $data['sequence'] = DocumentationChapter::max('sequence')+1;
 
+
         $documentationChapter = new DocumentationChapter();
         $documentationChapter->fill($data);
+
+        // $documentationChapter->body = str_replace('S^', '<h2 class="documentation-chapter" id="sub-chapter-', $documentationChapter->body);
+        // $documentationChapter->body = str_replace('^S', '">', $documentationChapter->body);
+
         $documentationChapter->save();
 
         return redirect()

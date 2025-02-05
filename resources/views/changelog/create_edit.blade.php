@@ -3,7 +3,14 @@
 @section('body_id', 'edit')
 
 @section('content')
+
     <div id="changelog_holder" class="edit-view">
+
+
+        @foreach ($errors->all() as $error)
+            <div class="error-box">{{ $error }}</div>
+        @endforeach
+
         <form method="post" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
             @csrf
 

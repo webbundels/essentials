@@ -24,6 +24,9 @@ class StoreDocumentationRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'title' => 'required',
+            'body' => 'required'
+        ];
     }
 }

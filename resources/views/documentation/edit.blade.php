@@ -6,6 +6,11 @@
 
 @section('content')
     <div id="documentation_holder" class="edit-view">
+
+        @foreach ($errors->all() as $error)
+            <div class="error-box">{{ $error }}</div>
+        @endforeach
+
         <form method="post" action="{{ $documentationChapter->id ? route('documentation.update', ['id' => $documentationChapter->id]) : route('documentation.store') }}">
             @csrf
 
