@@ -1,11 +1,11 @@
 <?php
 
-namespace Webbundels\Essentials\Http\Requests\Documentation;
+namespace Webbundels\Essentials\Http\Requests\Subchapter;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreDocumentationRequest extends FormRequest
+class EditSubchapterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class StoreDocumentationRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required'
-        ];
+        return [];
     }
 }

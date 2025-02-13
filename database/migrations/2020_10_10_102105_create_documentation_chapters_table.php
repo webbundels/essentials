@@ -16,7 +16,7 @@ class CreateDocumentationChaptersTable extends Migration
         Schema::create('documentation_chapters', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->integer('sequence')->unsigned();
             $table->timestamps();
         });

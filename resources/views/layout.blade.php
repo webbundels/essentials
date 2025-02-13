@@ -20,7 +20,7 @@
 
     <body id="@yield('body_id')">
         @yield('content')
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         @yield('scripts')
         <script type="text/javascript">
             {!! file_get_contents(base_path('vendor/webbundels/essentials/resources/assets/js/app.js')) !!}

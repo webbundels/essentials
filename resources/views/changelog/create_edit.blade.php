@@ -11,6 +11,23 @@
             <div class="error-box">{{ $error }}</div>
         @endforeach
 
+
+        <div id="toolbar">
+            <!-- Add font size dropdown -->
+            <select class="ql-size">
+              <option value="small"></option>
+              <!-- Note a missing, thus falsy value, is used to reset to default -->
+              <option selected></option>
+              <option value="large"></option>
+              <option value="huge"></option>
+            </select>
+            <button class="ql-bold"></button>
+            <button class="ql-script" value="sub"></button>
+            <button class="ql-script" value="super"></button>
+
+            <button> test </button>
+          </div>
+
         <form method="post" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
             @csrf
 

@@ -4,6 +4,14 @@ body #documentation_holder {
     min-width: 870px;
 }
 
+.content {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
 body #documentation_holder .styled-button {
     cursor: pointer;
     padding: 5px 25px;

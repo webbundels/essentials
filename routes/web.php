@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webbundels\Essentials\Http\Controllers\ChangelogController;
 use Webbundels\Essentials\Http\Controllers\DocumentationController;
+use Webbundels\Essentials\Http\Controllers\SubchapterController;
 
 Route::controller(ChangelogController::class)
 ->name('changelog.')
@@ -22,6 +23,22 @@ Route::controller(ChangelogController::class)
     Route::post('{id}',         'update')->name('update');
 
     # Deletes
+    Route::get('{id}/delete',   'delete')->name('delete');
+});
+
+
+Route::controller(SubchapterController::class)
+->name('subchapter.')
+->middleware(['web', 'auth.basic'])
+->prefix('subchapter')
+->group(function() {
+
+    Route::get('{id}',          'edit')->name('edit');
+    Route::post('{id}',         'update')->name('update');
+
+    Route::post('change-order/{id}', 'changeOrder')->name('change_order');
+
+
     Route::get('{id}/delete',   'delete')->name('delete');
 });
 

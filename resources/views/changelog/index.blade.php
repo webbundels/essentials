@@ -9,6 +9,7 @@
                 {{ config('app.name') }}<br/>
                 change log
             </h1>
+
         </div>
     </div>
 
@@ -18,7 +19,7 @@
                 <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
             </div>
         @endif
-        
+
         <div data-changelog-container class="changelog-container">
             @foreach ($changelogChapters as $chapter)
                 <div class="changelog-chapter">
@@ -28,7 +29,12 @@
                 </div>
             @endforeach
         </div>
-    </div>  
+
+        <div class="switch-button-holder">
+            <a class="styled-button" href="documentatie">Documentation</a>
+        </div>
+    </div>
+
 @stop
 
 @section('scripts')
