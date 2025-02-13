@@ -62,16 +62,18 @@ class SubchapterController extends Controller
     }
 
     public function changeOrder(ChangeOrderSubchapterRequest $request, $id) {
+        // So what we do is we increase or decrease the sequence of the current subchapter that we are trying to move.
+        // Then we loop through the other subchapter of the current DocumentationChapter, if it has our updated sequence we move it to our old sequence.
+
         $subchapters = DocumentationChapter::find($request['documentation_id'])->subchapters->all();
 
         $new_sequence = (int) $request['current_sequence'] + (int) $request['new_move'];
 
-        $is_outdated = false;
         foreach($subchapters as $subchapter) {
+
                 if ($subchapter->id == (int) $request['subchapter_id']) {
                     $subchapter->sequence = $new_sequence;
                     $subchapter->save();
-                    $is_outdated = true;
 
                 } else if ($subchapter->sequence == $new_sequence) {
                     $subchapter->sequence = (int) $request['current_sequence'];

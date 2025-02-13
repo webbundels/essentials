@@ -26,10 +26,6 @@ class DocumentationController extends Controller
     {
         $documentationChapters = DocumentationChapter::all();
 
-        // $subchapters = $documentationChapters->first()->subChapters;
-        // dd($subchapters);
-
-
         return view('EssentialsPackage::documentation.index', compact('documentationChapters'));
     }
 
@@ -40,6 +36,8 @@ class DocumentationController extends Controller
         return view('EssentialsPackage::documentation.edit', compact('documentationChapter'));
     }
 
+    //Converts a request form to an array with subchapter items
+    //Note: these ARE NOT actuall subchapter model but they do share the same structure
     private function validateSubchapterInfo($data) {
         $subchapters = [];
         if (array_key_exists('sub_title', $data)) {
@@ -51,17 +49,26 @@ class DocumentationController extends Controller
                                     'id' => (int) $data['sub_id'][$i],
                                     'sequence' => $i
                 ];
+                // The subchapter goes as follows:
+                // Title
+                // body
+                // id
+                // sequence
+                // Note: the subchapter also needs a documentation_id but that is outside of this functions scope.
             }
         }
 
         return $subchapters;
     }
 
+    //updates a subchapter model.
+    // If the subchapter doenst exists yet it creates a new once.
     private function storeOrUpdateSubchapters($documentationChapterId, $subchapters) {
 
 
         foreach ($subchapters as $subchapter) {
-
+            // If our subchapter already exists then we need a new one.
+            // Otherwise just update the current one.
             if ($subchapter['id'] == -1) {
                 $subchapter['documentation_chapter_id'] = $documentationChapterId;
 
@@ -70,6 +77,7 @@ class DocumentationController extends Controller
 
                 $new_subchapter->save();
             } else {
+                // Do not update the Id since its a '-1'
                 SubChapter::where('id', $subchapter['id'])->update(Arr::except($subchapter, ['id']));
             }
 

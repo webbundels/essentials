@@ -10,6 +10,7 @@ class SubChapter extends Model
         'title',
         'body',
         'sequence',
+        //Note: documentation_chapter_id is a forgein id for the DocumentationChapter model.
         'documentation_chapter_id'
     ];
 
