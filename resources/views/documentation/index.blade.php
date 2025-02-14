@@ -22,7 +22,7 @@
                 {{-- <button class="styled-button" data-edit-button>Volgorde wijzigen</button>
                 <div class="styled-button cancel" data-cancel-button>Annuleren</div> --}}
 
-                <input class="styled-button save" data-save-button type="submit" value="Opslaan">
+                {{-- <input class="styled-button save" data-save-button type="submit" value="Opslaan"> --}}
             </div>
         @endif
 
@@ -40,6 +40,7 @@
             @foreach ($documentationChapters as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
+                    <h3 class="last-updated" style="font-style: italic; color: gray;"> Last updated at: {{ $documentationChapter->updated_at->format('d/m/y H:m') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
                     {!! $documentationChapter->body !!}
 

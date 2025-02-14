@@ -46,8 +46,12 @@ class SubchapterController extends Controller
 
     public function update(UpdateSubchapterRequest $request, $id)
     {
-        SubChapter::where('id', $id)->update(Arr::except($request->all(), ['_token']));
+        $subchapter = SubChapter::find($id);
+        $subchapter->update(Arr::except($request->all(), ['_token']));
 
+        $parent_chapter = DocumentationChapter::find($subchapter->documentation_chapter_id);
+        $parent_chapter->updated_at = now();
+        $parent_chapter->save();
 
         return redirect()
             ->route('documentation.index');
