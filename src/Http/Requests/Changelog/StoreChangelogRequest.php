@@ -26,7 +26,8 @@ class StoreChangelogRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'version' => 'required'
         ];
     }
 }

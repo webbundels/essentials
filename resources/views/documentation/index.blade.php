@@ -40,7 +40,7 @@
             @foreach ($documentationChapters as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
-                    <h3 class="last-updated" style="font-style: italic; color: gray;"> Last updated at: {{ $documentationChapter->updated_at->format('d/m/y H:m') }} </h3>
+                    <h3 class="last-updated" style="font-style: italic; color: gray;"> Bijgewerkt op: {{ $documentationChapter->updated_at->format('d/m/y H:m') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
                     {!! $documentationChapter->body !!}
 
@@ -49,7 +49,7 @@
                         <hr>
 
                         <div id="subchapter-{{ Str::of($subchapter->title)->slug('-') }}" class="subchapter_display" style="margin-left: 2.5vw;">
-                            <a href="{{ route('subchapter.edit', ['id' => $subchapter->id]) }}" style="margin-left: 70vw;">Edit</a>
+                            <a href="{{ route('subchapter.edit', ['id' => $subchapter->id]) }}" style="margin-left: 70vw;">Wijzigen</a>
 
                                 @if (Auth::user()->documentationEditable)
                                 {{-- This form is for moving subchapters up and down --}}

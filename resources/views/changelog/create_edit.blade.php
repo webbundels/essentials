@@ -31,11 +31,15 @@
         <form method="post" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
             @csrf
 
-            <input type="text" name="title" value="{{ $changelogChapter->title }}">
+            <input type="text" name="title" placeholder="Titel" value="{{ old('title', $changelogChapter->title) }}">
 
-            <input type="hidden" name="body" id="body_input" value="{{ $changelogChapter->body }}">
+            <input type="text" name="version" placeholder="versie" value="{{ old('body', $changelogChapter->version) }}">
 
-            <div id="body_text">{!! $changelogChapter->body !!}</div>
+            <input type="hidden" name="body" id="body_input" value="{{ old('body', $changelogChapter->body) }}">
+
+            <input type="date" name="created_at">
+
+            <div id="body_text">{!! old('body', $changelogChapter->body) !!}</div>
 
             <div class="button-holder">
                 <a href="{{ route('changelog.index') }}" onclick="cancel(this.dataset)" class="styled-button cancel">Annuleren</a>

@@ -166,3 +166,18 @@ function addSubChapter() {
 
     createQuillEditor(new_editor_ele, editor_input, new_toolbar_ele);
 }
+
+function toggleCommits(index) {
+
+    var commitHolder = document.getElementById("commit-holder-" + index.toString());
+    var button = document.getElementById("toggle-button-" + index.toString());
+
+
+    if (commitHolder.style.display == "none") {
+        commitHolder.style.display = "inherit";
+        button.innerHTML = "hide";
+    } else {
+        commitHolder.style.display = "none";
+        button.innerHTML = "show";
+    }
+}

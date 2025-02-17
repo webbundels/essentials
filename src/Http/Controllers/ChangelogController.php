@@ -5,7 +5,9 @@ namespace Webbundels\Essentials\Http\Controllers;
 use Illuminate\Support\Arr;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
+use Webbundels\Essentials\Models\Commit;
 use Webbundels\Essentials\Models\ChangelogChapter;
+use Webbundels\Essentials\EssentialsServiceProvider;
 use Webbundels\Essentials\Http\Requests\Changelog\EditChangelogRequest;
 use Webbundels\Essentials\Http\Requests\Changelog\ViewChangelogRequest;
 use Webbundels\Essentials\Http\Requests\Changelog\StoreChangelogRequest;
@@ -19,12 +21,33 @@ class ChangelogController extends Controller
     {
         View::share('section', 'changelog');
     }
-    
+
     public function index(ViewChangelogRequest $request)
     {
-        $changelogChapters = ChangelogChapter::orderByDesc('created_at')->get();
+        $changelogChapters = ChangelogChapter::get()->sortBy('created_at')->reverse();
+        EssentialsServiceProvider::refreshCommits();
 
-        return view('EssentialsPackage::changelog.index', compact('changelogChapters'));
+        $commits = Commit::get();
+
+        $sorted_items = collect();
+        $previous_chapter = null;
+        foreach ($changelogChapters as $index => $chapter) {
+            if (! $previous_chapter) {
+                $sorted_items->push(['commits' => $commits->where('created_at', '>', $chapter->created_at), 'changelog' => $chapter]);
+            } else {
+                $sorted_items->push([
+                    'commits' => $commits->whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at]),
+                    'changelog' => $chapter
+                ]);
+            }
+            $previous_chapter = $chapter;
+            //["extraCommits" => [], ["commits" => [], "changelog" => null], ]
+        }
+
+        // $changelogChapters = collect($changelogChapters)->merge($commits);
+        // $changelogChapters = $changelogChapters->sortBy('created_at')->reverse();
+
+        return view('EssentialsPackage::changelog.index', compact('sorted_items'));
     }
 
     public function create(CreateChangelogRequest $request)
@@ -41,6 +64,9 @@ class ChangelogController extends Controller
         $changelogChapter->fill($request->all());
         $changelogChapter->save();
 
+        $changelogChapter->created_at = $request->all()['created_at'];
+        $changelogChapter->save();
+
         return redirect()
             ->route('changelog.index');
     }
@@ -55,7 +81,11 @@ class ChangelogController extends Controller
 
     public function update(UpdateChangelogRequest $request, $id)
     {
-        ChangelogChapter::where('id', $id)->update(Arr::except($request->all(), ['_token']));
+        $changelogChapter = ChangelogChapter::find($id);
+        $changelogChapter->update(Arr::except($request->all(), ['_token']));
+
+        $changelogChapter->created_at = $request->all()['created_at'];
+        $changelogChapter->save();
 
         return redirect()
             ->route('changelog.index');

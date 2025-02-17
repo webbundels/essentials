@@ -9,5 +9,5 @@ class ChangelogChapter extends Model
 {
     public $timestamps = true;
 
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['title', 'body', 'version'];
 }
