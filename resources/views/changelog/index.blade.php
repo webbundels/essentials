@@ -14,16 +14,20 @@
     </div>
 
     <div id="changelog_holder">
-        @if (Auth::user()->changelog_§)
+
             <div class="button-holder">
-                <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
+                <a id="home_button" class="styled-button" href="/"> Home </a>
+                <a id="documentation_button" class="styled-button" href="{{route('documentation.index')}}"> Documentation </a>
+                @if (Auth::user()->changelog_editable)
+                    <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
+                @endif
             </div>
-        @endif
 
         <div data-changelog-container class="changelog-container">
             @foreach ($sorted_items->all() as $index => $item)
 
                 <h2> Commits: {{ count($item['commits']) }} </h2>
+                <a class="github-link" href="{{$item['URL']}}"> Show on Github </a>
 
                 <div id="commit-holder-{{$index}}" style="display: none;">
                 @foreach($item['commits']->all() as $commit)

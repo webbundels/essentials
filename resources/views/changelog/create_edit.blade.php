@@ -13,10 +13,8 @@
 
 
         <div id="toolbar">
-            <!-- Add font size dropdown -->
             <select class="ql-size">
               <option value="small"></option>
-              <!-- Note a missing, thus falsy value, is used to reset to default -->
               <option selected></option>
               <option value="large"></option>
               <option value="huge"></option>
@@ -25,7 +23,6 @@
             <button class="ql-script" value="sub"></button>
             <button class="ql-script" value="super"></button>
 
-            <button> test </button>
           </div>
 
         <form method="post" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
@@ -37,7 +34,11 @@
 
             <input type="hidden" name="body" id="body_input" value="{{ old('body', $changelogChapter->body) }}">
 
-            <input type="date" name="created_at">
+            <input type="date" name="created_at" value="
+                    @if($changelogChapter->created_at != null)
+                     {{ old('created_at', $changelogChapter->created_at->format('Y-m-d')) }}
+                    @endif
+                ">
 
             <div id="body_text">{!! old('body', $changelogChapter->body) !!}</div>
 

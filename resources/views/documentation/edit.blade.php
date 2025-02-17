@@ -31,6 +31,7 @@
                     <button id="custom-button" type="button"> B </button>
                 </div>
 
+                <label for="title"> Titel </label>
                 <input type="text" name="title" value="{{ old('title', $documentationChapter->title) }}" required>
 
                 <input type="hidden" name="body" id="body_input" value="{{ old('body', $documentationChapter->body) }}">

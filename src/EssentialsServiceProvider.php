@@ -15,6 +15,14 @@ class EssentialsServiceProvider extends ServiceProvider
     //
   }
 
+  public static function getGithubRepo(): string {
+    return 'webbundels/changelog';
+  }
+
+  public static function getGithubURL(): string {
+    return 'https://api.github.com/repos/webbundels/changelog';
+  }
+
   public static function refreshCommits() {
         $client = new Client([
             // 'base_uri' => 'https://api.github.com/',
@@ -24,9 +32,9 @@ class EssentialsServiceProvider extends ServiceProvider
             // ],
         ]);
 
-        $url = 'https://api.github.com/repos/webbundels/changelog';
 
-        $res = $client->get($url);
+
+        $res = $client->get(EssentialsServiceProvider::getGithubURL());
 
 
         $body = json_decode($res->getBody());
@@ -44,7 +52,7 @@ class EssentialsServiceProvider extends ServiceProvider
 
         if ($date > $cached_data || $cached_data == null || count(Commit::all()) == 0) {
             // We need commits
-            $commit_request = $client->get($url.'/commits?since='. $cached_data->format('Y-m-d') .'T'.  $cached_data->format('H:i:s').'z');
+            $commit_request = $client->get(EssentialsServiceProvider::getGithubURL().'/commits?since='. $cached_data->format('Y-m-d') .'T'.  $cached_data->format('H:i:s').'z');
             $raw_commits = json_decode($commit_request->getBody());
 
 

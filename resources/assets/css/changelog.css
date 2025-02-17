@@ -29,8 +29,8 @@ body #changelog_holder .button-holder {
     width: 240px;
     right: 20px;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
+    -webkit-transform: translateY(240%);
+            transform: translateY(240%);
     display: flex;
     flex-flow: column;
     justify-content: space-between;
