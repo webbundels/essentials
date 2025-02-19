@@ -38,7 +38,7 @@ class DocumentationController extends Controller
 
     //Converts a request form to an array with subchapter items
     //Note: these ARE NOT actuall subchapter model but they do share the same structure
-    private function validateSubchapterInfo($data) {
+    private function parseSubchapterInfo($data) {
         $subchapters = [];
         if (array_key_exists('sub_title', $data)) {
             $subchapter_titles = $data['sub_title'];
@@ -88,7 +88,7 @@ class DocumentationController extends Controller
     {
         $data = $request->all();
         $data['sequence'] = DocumentationChapter::max('sequence')+1;
-        $subchapters = $this->validateSubchapterInfo($data);
+        $subchapters = $this->parseSubchapterInfo($data);
 
         $documentationChapter = new DocumentationChapter();
         $documentationChapter->fill($data);
@@ -115,7 +115,7 @@ class DocumentationController extends Controller
     {
 
         DocumentationChapter::where('id', $id)->update(Arr::except($request->all(), ['_token', 'sub_body', 'sub_title', 'sub_id']));
-        $subchapters = $this->validateSubchapterInfo($request->all());
+        $subchapters = $this->parseSubchapterInfo($request->all());
         $this->storeOrUpdateSubchapters($id, $subchapters);
 
 

@@ -238,11 +238,24 @@ function loadDocumentationPage() {
 }
 
 
-function toggleCommits(index) {
+function toggleCommits(index, changelog_id, previous_id) {
+
 
     var commitHolder = document.getElementById("commit-holder-" + index.toString());
     var button = document.getElementById("toggle-button-" + index.toString());
 
+    if (commitHolder.getElementsByClassName("commit").length == 0) {
+        // we need to get those commits
+        console.log("WE NEED COMMITS");
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+                console.log(this.responseText);
+            console.log("state: " + this.readyState);
+        };
+        xhttp.open("GET", "/commit", true);
+        xhttp.send(index, changelog_id, previous_id);
+    }
 
     if (commitHolder.style.display == "none") {
         commitHolder.style.display = "inherit";

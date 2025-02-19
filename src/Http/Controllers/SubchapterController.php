@@ -76,12 +76,12 @@ class SubchapterController extends Controller
         foreach($subchapters as $subchapter) {
 
                 if ($subchapter->id == (int) $request['subchapter_id']) {
-                    $subchapter->sequence = $new_sequence;
+                    $subchapter->sequence = $new_sequence; //1 -> 2
                     $subchapter->save();
 
-                } else if ($subchapter->sequence == $new_sequence) {
+                } else if ($subchapter->sequence == $new_sequence) { //2
                     $subchapter->sequence = (int) $request['current_sequence'];
-                    $subchapter->save();
+                    $subchapter->save(); // 2 -> 1
                 }
         }
 

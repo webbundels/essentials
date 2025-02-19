@@ -47,7 +47,6 @@ class EssentialsServiceProvider extends ServiceProvider
             $cached_data = Cache::get('last_update');
         } else if (Commit::count() > 0) {
             $cached_data = new DateTime(Commit::first()->created_at);
-            echo $cached_data->format('Y-m-d');
         }
 
         if ($date > $cached_data || $cached_data == null || count(Commit::all()) == 0) {

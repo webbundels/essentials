@@ -37,11 +37,7 @@
 
             <input type="hidden" name="body" id="body_input" value="{{ old('body', $changelogChapter->body) }}">
 
-            <input type="date" name="created_at" id="date_input" value="
-                    @if($changelogChapter->created_at != null)
-                     {{ old('created_at', $changelogChapter->created_at->format('Y-m-d')) }}
-                    @endif
-                ">
+            <input type="date" name="created_at" id="date_input" value="{{ $changelogChapter->created_at != null ? old('created_at', $changelogChapter->created_at->format('Y-m-d')) : '' }}">
 
             <div id="body_text">{!! old('body', $changelogChapter->body) !!}</div>
 

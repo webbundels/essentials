@@ -24,40 +24,41 @@ class ChangelogController extends Controller
 
     public function index(ViewChangelogRequest $request)
     {
-        $changelogChapters = ChangelogChapter::get()->sortBy('created_at')->reverse();
-        EssentialsServiceProvider::refreshCommits();
+        $changelogChapters = ChangelogChapter::get()->sortByDesc('created_at');
 
-        $commits = Commit::get()->sortBy('created_at');
+        EssentialsServiceProvider::refreshCommits();
 
         $sorted_items = collect();
         $previous_chapter = null;
 
         // URL : https://github.com/webbundels/essentials/commits/dev?since=2025-02-13&until=2025-02-17
         foreach ($changelogChapters as $index => $chapter) {
+            $commits_count = null;
+
+            $previous_id = -1;
+
             if (! $previous_chapter) {
-                $sorted_commits = $commits->where('created_at', '>', $chapter->created_at);
-                $sorted_items->push([
-                    'commits' => $sorted_commits,
-                    'changelog' => $chapter,
-                    'URL' => 'https://github.com/'.EssentialsServiceProvider::getGithubRepo().'/commits?since='.$sorted_commits->first()->created_at->format('y-m-d').'&until='.$sorted_commits->last()->created_at->format('y-m-d')
-                ]);
+                $commits_count = Commit::where('created_at', '>', $chapter->created_at)->count();
             } else {
-                $sorted_commits =  $commits->whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at]);
-                $sorted_items->push([
-                    'commits' => $sorted_commits,
-                    'changelog' => $chapter,
-                    'URL' => 'https://github.com/'.EssentialsServiceProvider::getGithubRepo().'/commits?since='.$sorted_commits->first()->created_at->format('y-m-d').'&until='.$sorted_commits->last()->created_at->format('y-m-d')
-                ]);
+                $previous_id = $previous_chapter->id;
+                $commits_count =  Commit::whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at])->count();
             }
+
+            $sorted_items->push([
+                'commit_count' => $commits_count,
+                'changelog' => $chapter,
+                'changelog_id' => $chapter->id,
+                'previous_id' => $previous_id,
+                //'URL' => 'https://github.com/'.EssentialsServiceProvider::getGithubRepo().'/commits?since='.$sorted_commits->first()->created_at->format('y-m-d').'&until='.$sorted_commits->last()->created_at->format('y-m-d')
+            ]);
             $previous_chapter = $chapter;
             //["extraCommits" => [], ["commits" => [], "changelog" => null], ]
         }
 
-        // $changelogChapters = collect($changelogChapters)->merge($commits);
-        // $changelogChapters = $changelogChapters->sortBy('created_at')->reverse();
 
         return view('EssentialsPackage::changelog.index', compact('sorted_items'));
     }
+
 
     public function create(CreateChangelogRequest $request)
     {
