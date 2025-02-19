@@ -236,13 +236,73 @@ function loadDocumentationPage() {
 
     console.log("Loaded Documentation");
 }
+/*
+<div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
 
+                        <h4 class="edit-title">{{ $commit->commiter }} </h2>
+                        <h6 class="version-title"> versie: {{ $commit->message }} </h4>
 
-function toggleCommits(index) {
+                        <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
+                        <hr>
+                    </div>
+*/
+function createNewCommitElement(index, commiter, message, date) {
+    var commit_ele = document.createElement("div");
+    commit_ele.classList.add("commit");
+    commit_ele.style.marginLeft = "4vw";
+    commit_ele.style.fontStyle = "italic";
+    commit_ele.style.display = "inherit";
+
+    var title = document.createElement("h4");
+    title.classList.add("commit-title");
+    title.innerHTML = commiter;
+
+    commit_ele.appendChild(title);
+
+    var commit_message = document.createElement("h6");
+    commit_message.classList.add("commit-message");
+    commit_message.innerHTML = message;
+
+    commit_ele.appendChild(commit_message);
+
+    var commit_date = document.createElement("h5");
+    commit_date.classList.add("date-title");
+    commit_date.innerHTML = "Gemaakt op: " + date;
+
+    commit_ele.appendChild(commit_date);
+
+    var commit_holder = document.getElementById("commit-holder-" + index);
+    commit_holder.appendChild(commit_ele);
+}
+
+function parseCommits(index, commits) {
+
+    for (let i=0; i<commits.length; i++) {
+        var commiter = commits[i].commiter;
+        var message = commits[i].message;
+        var date = commits[i].created_at;
+
+        createNewCommitElement(index, commiter, message, date);
+    }
+}
+
+function toggleCommits(index, changelog_id, previous_id) {
+
 
     var commitHolder = document.getElementById("commit-holder-" + index.toString());
     var button = document.getElementById("toggle-button-" + index.toString());
 
+    if (commitHolder.getElementsByClassName("commit").length == 0) {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                parseCommits(index, JSON.parse(this.response).commits);
+            }
+        };
+        xhttp.open("GET", "/commit?index=" + index + "&changelog_id=" + changelog_id + "&previous_id=" + previous_id, true);
+        xhttp.send();
+    }
 
     if (commitHolder.style.display == "none") {
         commitHolder.style.display = "inherit";

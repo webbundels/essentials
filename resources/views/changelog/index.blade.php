@@ -22,37 +22,37 @@
         <div class="button-holder">
             @if (Auth::user()->changelog_editable)
                 <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
+                <a id="refresh_commits_button" class="styled-button" href="{{ route('commit.refresh') }}"> Refresh Commits </a>
             @endif
         </div>
 
         <div data-changelog-container class="changelog-container">
-            @foreach ($sorted_items->all() as $index => $item)
+            @foreach ($sorted_items as $index => $item)
 
-                <h2> Commits: {{ count($item['commits']) }} </h2>
-                <a class="github-link" href="{{$item['URL']}}"> Show on Github </a>
+                <h6> Commits: {{ $item['commit_count']}} </h1>
 
+                <a id="toggle-button-{{$index}}" onclick="toggleCommits({{$index}}, {{$item['changelog_id']}}, {{$item['previous_id']}} )"> show </a>
                 <div id="commit-holder-{{$index}}" style="display: none;">
-                @foreach($item['commits']->all() as $commit)
+                {{-- @foreach($item['commits'] as $commit)
                     <div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
 
                         <h4 class="edit-title">{{ $commit->commiter }} </h2>
                         <h6 class="version-title"> versie: {{ $commit->message }} </h4>
 
-                        <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d/m/y h:m') }} </h3>
+                        <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
                         <hr>
                     </div>
-                @endforeach
+                @endforeach --}}
                 </div>
 
 
-                <a id="toggle-button-{{$index}}" onclick="toggleCommits({{$index}})"> show </a>
 
                 @if($item['changelog'] != null)
                     <div class="changelog-chapter">
                         <h2 class="edit-title">{{ $item['changelog']->title }} </h2>
                         <h4 class="version-title"> versie: {{ $item['changelog']->version }} </h4>
 
-                        <h3 class="date-title"> Gemaakt op: {{ $item['changelog']->created_at->format('d/m/y h:m') }} </h3>
+                        <h3 class="date-title"> Gemaakt op: {{ $item['changelog']->created_at->format('d-m-Y h:i') }} </h3>
 
                         <div class="changelog-body">
                             {!! $item['changelog']->body !!}
