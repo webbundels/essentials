@@ -7,6 +7,12 @@
 @section('content')
     <div id="header_holder">
         <div class="header">
+            <a id="home_button" class="back-button" href="/">
+                Terug naar de applicatie
+            </a>
+            <a id="changelog_button" class="switch-button" href="{{route('changelog.index')}}">
+                Naar het changelog
+            </a>
             <h1>
                 {{ config('app.name') }}<br/>
                 documentatie
@@ -16,13 +22,9 @@
 
     <div id="documentation_holder">
             <div class="button-holder">
-
-                <a id="home_button" class="styled-button" href="/"> Home </a>
-                <a id="changelog_button" class="styled-button" href="{{route('changelog.index')}}"> Changelog </a>
                 @if (Auth::user()->documentation_editable)
                     <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
                 @endif
-
             </div>
 
         <div id="table_of_contents">

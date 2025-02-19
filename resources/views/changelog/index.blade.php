@@ -5,23 +5,25 @@
 @section('content')
     <div id="header_holder">
         <div class="header">
+            <a id="home_button" class="back-button" href="/">
+                Terug naar de applicatie
+            </a>
+            <a class="switch-button" href="documentatie">
+                Naar de documentatie
+            </a>
             <h1>
-                {{ config('app.name') }}<br/>
-                change log
+                {{ config('app.name') }} changelog
             </h1>
-
         </div>
     </div>
 
     <div id="changelog_holder">
 
-            <div class="button-holder">
-                <a id="home_button" class="styled-button" href="/"> Home </a>
-                <a id="documentation_button" class="styled-button" href="{{route('documentation.index')}}"> Documentation </a>
-                @if (Auth::user()->changelog_editable)
-                    <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
-                @endif
-            </div>
+        <div class="button-holder">
+            @if (Auth::user()->changelog_editable)
+                <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
+            @endif
+        </div>
 
         <div data-changelog-container class="changelog-container">
             @foreach ($sorted_items->all() as $index => $item)
@@ -62,10 +64,6 @@
                 @endif
 
             @endforeach
-        </div>
-
-        <div class="switch-button-holder">
-            <a class="styled-button" href="documentatie">Documentation</a>
         </div>
     </div>
 

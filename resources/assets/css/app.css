@@ -18,47 +18,57 @@ body {
     display: block;
 }
 
-body #header_holder {
-    background-color: #26afe5;
-    padding: 100px 0;
-    margin-bottom: 50px;
-}
+body{
+    #header_holder {
+        background-color: #26afe5;
+        padding: 100px 0;
+        margin-bottom: 50px;
 
-body #header_holder .header {
-    margin: 0 auto;
-    max-width: 1020px;
-    min-width: 870px;
-    color: white;
-}
+        .back-button{
 
-body #header_holder .header h1 {
-    font-weight: 700;
-    font-size: 2.7rem;
-}
+        }
 
-body .edit-view {
-    padding: 100px 0;
-}
+        .switch-button{
+            float: right;
+        }
 
-body .error-box {
-    color: #ba3939;
-    background: #ffe0e0;
-    border: 1px solid #a33a3a;
-    border-radius: 5px;
-    font-size: x-large;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-}
+        .header {
+            margin: 0 auto;
+            max-width: 1020px;
+            min-width: 870px;
+            color: white;
 
-body .edit-view input {
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
+            h1 {
+                font-weight: 700;
+                font-size: 2.7rem;
+            }
+        }
 
-body .edit-view .ql-editor {
-    min-height: 250px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    }
+    .edit-view {
+        padding: 100px 0;
+
+        input {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .ql-editor {
+            min-height: 250px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    }
+
+    .error-box {
+        color: #ba3939;
+        background: #ffe0e0;
+        border: 1px solid #a33a3a;
+        border-radius: 5px;
+        font-size: x-large;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 }
