@@ -12,7 +12,9 @@
             <h1> ERROR: {{ $error }} </h1>
         @endforeach
 
-        <form method="post"  id="doc_form", action="{{ $documentationChapter->id ? route('documentation.update', ['id' => $documentationChapter->id]) : route('documentation.store') }}">
+        <button onclick="loadDocumentationPage()"> Recover previous session </button>
+
+        <form method="post" class="documentationForm" id="form", action="{{ $documentationChapter->id ? route('documentation.update', ['id' => $documentationChapter->id]) : route('documentation.store') }}">
             @csrf
 
             <div class="documentation_chapter_holder">
@@ -28,11 +30,10 @@
                     <button class="ql-bold"></button>
                     <button class="ql-italic"></button>
 
-                    <button id="custom-button" type="button"> B </button>
                 </div>
 
                 <label for="title"> Titel </label>
-                <input type="text" name="title" value="{{ old('title', $documentationChapter->title) }}" required>
+                <input type="text" name="title" id="title_input" value="{{ old('title', $documentationChapter->title) }}" required>
 
                 <input type="hidden" name="body" id="body_input" value="{{ old('body', $documentationChapter->body) }}">
 
@@ -52,10 +53,9 @@
                                 <button class="ql-bold"></button>
                                 <button class="ql-italic"></button>
 
-                                <button id="custom-button" type="button"> B </button>
                             </div>
 
-                            <input type="text" name="sub_title[]" placeholder="Subchapter title" style="margin-top: 2vh; margin-left: 2vw; visibility:" value="{{ $subchapter->title }}">
+                            <input type="text" class="subchapter_title_input" name="sub_title[]" placeholder="Subchapter title" style="margin-top: 2vh; margin-left: 2vw; visibility:" value="{{ $subchapter->title }}">
                             <input class="subchapter_editor" type="hidden" name="sub_body[]" placeholder="desc..." style="margin-top: 2vh; margin-left: 2vw;" value="{{ $subchapter->body }}">
                             <input type="hidden" name="sub_id[]" value="{{ $subchapter->id }}">
 
@@ -71,7 +71,7 @@
                 @if ($documentationChapter->id)
                     <input type="button" data-href="{{ route('documentation.delete', ['id' => $documentationChapter->id]) }}" onclick="deleteChapter(this.dataset)" class="styled-button cancel" value="Verwijderen">
                 @endif
-                <input class="styled-button save" data-save-button type="submit" value="Opslaan">
+                <input class="styled-button save" data-save-button type="submit"  onclick="localStorage.clear()" value="Opslaan">
             </div>
         </form>
 

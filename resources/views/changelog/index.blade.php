@@ -52,6 +52,9 @@
 
                         <h3 class="date-title"> Gemaakt op: {{ $item['changelog']->created_at->format('d/m/y h:m') }} </h3>
 
+                        <div class="changelog-body">
+                            {!! $item['changelog']->body !!}
+                        </div>
                         <a href="{{ route('changelog.edit', ['id' => $item['changelog']->id]) }}" class="title-button">Wijzigen</a>
                     </div>
                 @else

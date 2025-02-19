@@ -8,10 +8,19 @@ var toolbarOptions = [
     ['clean'],
 ];
 
+
+const SAVE_DELAY_MS = 30 * 1000;
 const Parchment = Quill.import('parchment');
 const customRegistry = new Parchment.Registry();
 
 
+if (document.getElementById("form") != null) {
+    if (document.getElementById("documentation_holder") != null) {
+        setInterval(saveDocumentationPage, SAVE_DELAY_MS);
+    } else {
+        setInterval(saveChangelogPage, SAVE_DELAY_MS);
+    }
+}
 if (document.getElementById('edit') !== null) {
 
     const editorEle = document.getElementById('body_text');
@@ -51,7 +60,6 @@ if (document.getElementById('edit') !== null) {
 
 var existingSubchapters = document.getElementsByClassName("subchapter_holder");
 
-
 for (let i=0; i < existingSubchapters.length; i++) {
 
     var existingSubchapter = existingSubchapters.item(i);
@@ -66,6 +74,7 @@ for (let i=0; i < existingSubchapters.length; i++) {
     newEditorElement.querySelector('.ql-editor').innerHTML = editorInput.value;
 
 }
+
 
 function createQuillEditor(editorElement, editorInput, toolbarElement) {
 
@@ -95,30 +104,14 @@ function createNewSubchapterElement() {
     var subchapterToolbar = document.createElement('div');
     subchapterToolbar.classList.add('sub_toolbar');
 
-    var qlSize = document.createElement('select');
-    subchapterToolbar.classList.add('ql-size');
+    subchapterToolbar.innerHTML = document.getElementById("toolbar").innerHTML;
 
-    var smallOption = document.createElement('option');
-    smallOption.value = 'small';
-
-    var normalOption = document.createElement('option');
-    normalOption.value = 'normal';
-    normalOption.selected = true;
-
-    var largeOption = document.createElement('option');
-    largeOption.value = 'large';
-
-
-    qlSize.appendChild(smallOption);
-    qlSize.appendChild(normalOption);
-    qlSize.appendChild(largeOption);
-
-    subchapterToolbar.appendChild(qlSize);
     subchapterHolder.appendChild(subchapterToolbar);
 
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
+    subTitle.classList.add("subchapter_title_input");
     subTitle.placeholder = 'SubChapter title';
     subTitle.style.marginTop = '2vh';
     subTitle.style.marginLeft = '2vw';
@@ -166,6 +159,84 @@ function addSubChapter() {
 
     createQuillEditor(new_editor_ele, editor_input, new_toolbar_ele);
 }
+
+function saveChangelogPage() {
+
+    if (document.getElementById("body_input").value === "") {
+        console.log("Did not save");
+        return;
+    }
+
+    localStorage.setItem("title_input", document.getElementById("title_input").value);
+    localStorage.setItem("version_input", document.getElementById("version_input").value);
+    localStorage.setItem("date_input", document.getElementById("date_input").value);
+
+    localStorage.setItem("body_input", document.getElementById('body_text').querySelector('.ql-editor').innerHTML);
+
+
+    console.log("Saved Changelogs");
+}
+
+function loadChangelogPage() {
+
+    document.getElementById("title_input").value = localStorage.getItem("title_input");
+    document.getElementById("version_input").value = localStorage.getItem("version_input");
+    document.getElementById("date_input").value = localStorage.getItem("date_input");
+
+    document.getElementById('body_text').querySelector('.ql-editor').innerHTML = localStorage.getItem("body_input");
+    document.getElementById("body_input").innerHTML = localStorage.getItem("body_input");
+    console.log("Loaded Changelog");
+}
+
+function saveDocumentationPage() {
+
+    if (document.getElementById("body_input").value === "") {
+        console.log("Did not save");
+        return;
+    }
+
+
+    localStorage.setItem("title_input", document.getElementById("title_input").value);
+    localStorage.setItem("body_input", document.getElementById('body_text').querySelector('.ql-editor').innerHTML);
+
+    var subchapter_titles = document.getElementsByClassName("subchapter_title_input");
+
+    for (i=0; i<subchapter_titles.length; i++) {
+        subchapter_titles[i].defaultValue = subchapter_titles[i].value;
+    }
+
+    localStorage.setItem("subchapters", document.getElementById("subchapter_list").innerHTML);
+
+    console.log("Saved Documentation");
+}
+
+function loadDocumentationPage() {
+
+    document.getElementById("title_input").value = localStorage.getItem("title_input");
+
+    document.getElementById('body_text').querySelector('.ql-editor').innerHTML = localStorage.getItem("body_input");
+    document.getElementById("body_input").innerHTML = localStorage.getItem("body_input");
+
+    document.getElementById("subchapter_list").innerHTML = localStorage.getItem("subchapters");
+
+    var subchapters = document.getElementsByClassName("subchapter_holder");
+
+    for (i=0; i<subchapters.length; i++) {
+        var existingSubchapter = subchapters[i];
+
+        var newEditorElement = existingSubchapter.getElementsByClassName("subchapter_editor")[1];
+        const editorInput = existingSubchapter.getElementsByClassName("subchapter_editor")[0];
+        var newToolbarElement = existingSubchapter.getElementsByClassName('sub_toolbar')[0];
+
+
+        createQuillEditor(newEditorElement, editorInput, newToolbarElement);
+
+        newEditorElement.querySelector('.ql-editor').innerHTML = editorInput.value;
+    }
+
+    console.log("Loaded Documentation");
+}
+
 
 function toggleCommits(index) {
 
