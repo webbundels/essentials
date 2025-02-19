@@ -3,9 +3,11 @@
 namespace Webbundels\Essentials;
 
 use DateTime;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Container\Attributes\Log;
 use Webbundels\Essentials\Models\Commit;
 
 class EssentialsServiceProvider extends ServiceProvider
@@ -14,22 +16,24 @@ class EssentialsServiceProvider extends ServiceProvider
   {
     //
   }
-
   public static function getGithubRepo(): string {
-    return 'webbundels/changelog';
+    return 'sanderWebbundels/first-site/';
   }
 
   public static function getGithubURL(): string {
-    return 'https://api.github.com/repos/webbundels/changelog';
+    return 'https://api.github.com/repos/sanderWebbundels/first-site';
   }
 
   public static function refreshCommits() {
+
+        try {
+
         $client = new Client([
-            // 'base_uri' => 'https://api.github.com/',
-            // 'headers' => [
-            //     'Authorization' => 'Bearer ' . env('GITHUB_TOKEN'),
-            //     'Accept' => 'application/vnd.github.v3+json',
-            // ],
+            'base_uri' => 'https://api.github.com/',
+            'headers' => [
+                'Authorization' => 'Bearer '.env('GITHUB_TOKEN'),
+                'Accept' => 'application/vnd.github.v3+json',
+            ],
         ]);
 
 
@@ -65,7 +69,9 @@ class EssentialsServiceProvider extends ServiceProvider
             }
         }
         Cache::forever('last_update', $date);
-
+    } catch(Exception $e) {
+        dd($e->getMessage());
+    }
 
   }
 

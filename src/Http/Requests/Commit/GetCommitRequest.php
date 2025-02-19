@@ -24,10 +24,6 @@ class GetCommitRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'index' => 'required',
-            'changelog_id' => 'required',
-            'previous_id' => 'required'
-        ];
+        return [];
     }
 }

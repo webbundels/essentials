@@ -25,9 +25,6 @@ class ChangelogController extends Controller
     public function index(ViewChangelogRequest $request)
     {
         $changelogChapters = ChangelogChapter::get()->sortByDesc('created_at');
-
-        EssentialsServiceProvider::refreshCommits();
-
         $sorted_items = collect();
         $previous_chapter = null;
 

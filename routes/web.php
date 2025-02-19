@@ -28,29 +28,31 @@ Route::controller(ChangelogController::class)
 });
 
 
+Route::middleware(['web', 'auth.basic'])->group(function() {
+    Route::controller(CommitController::class)
+    ->name('commit.')
+    ->prefix('commit')
+    ->group(function() {
+        Route::get('/', 'get')->name('get');
+        Route::get('refresh', 'refresh')->name('refresh');
+    });
 
-Route::controller(CommitController::class)
-->name('commit.')
-->middleware(['web', 'auth.basic'])
-->prefix('commit')
-->group(function() {
-    Route::get('/', 'get')->name('get');
+    Route::controller(SubchapterController::class)
+    ->name('subchapter.')
+    ->prefix('subchapter')
+    ->group(function() {
+
+        Route::get('{id}',          'edit')->name('edit');
+        Route::post('{id}',         'update')->name('update');
+
+        Route::post('change-order/{id}', 'changeOrder')->name('change_order');
+
+
+        Route::get('{id}/delete',   'delete')->name('delete');
+    });
+
 });
 
-Route::controller(SubchapterController::class)
-->name('subchapter.')
-->middleware(['web', 'auth.basic'])
-->prefix('subchapter')
-->group(function() {
-
-    Route::get('{id}',          'edit')->name('edit');
-    Route::post('{id}',         'update')->name('update');
-
-    Route::post('change-order/{id}', 'changeOrder')->name('change_order');
-
-
-    Route::get('{id}/delete',   'delete')->name('delete');
-});
 
 Route::controller(DocumentationController::class)
 ->name('documentation.')
