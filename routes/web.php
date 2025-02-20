@@ -33,6 +33,9 @@ Route::middleware(['web', 'auth.basic'])->group(function() {
     ->name('commit.')
     ->prefix('commit')
     ->group(function() {
+        // NOTE / WARNING: These dont return a view!!
+        // The get returns a array of commits.
+        // The refresh returns a redirect to the changelog index.
         Route::get('/', 'get')->name('get');
         Route::get('refresh', 'refresh')->name('refresh');
     });

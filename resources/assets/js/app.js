@@ -1,19 +1,11 @@
-
-var toolbarOptions = [
-    ['bold', 'italic'],
-    ['blockquote'],
-    [{ 'header': 1 }, { 'header': 2 }],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'color': [] }],
-    ['clean'],
-];
-
-
-const SAVE_DELAY_MS = 30 * 1000;
 const Parchment = Quill.import('parchment');
 const customRegistry = new Parchment.Registry();
 
 
+const SAVE_DELAY_MS = 30 * 1000;
+
+// When we load we check if the page is a form.
+// This means we are in a edit or create page, so we should enable auto-saving.
 if (document.getElementById("form") != null) {
     if (document.getElementById("documentation_holder") != null) {
         setInterval(saveDocumentationPage, SAVE_DELAY_MS);
@@ -21,8 +13,10 @@ if (document.getElementById("form") != null) {
         setInterval(saveChangelogPage, SAVE_DELAY_MS);
     }
 }
+// When we are in the create/edit page we need to setup the main quill editor
 if (document.getElementById('edit') !== null) {
 
+    // ele = element
     const editorEle = document.getElementById('body_text');
 
     const editor = new Quill(editorEle, {
@@ -58,8 +52,9 @@ if (document.getElementById('edit') !== null) {
     }
 }
 
+// For the edit page we automatically load the subchapters with their bodies.
+// But the Quilljs editor arent setup for them yet, so we need to do it now.
 var existingSubchapters = document.getElementsByClassName("subchapter_holder");
-
 for (let i=0; i < existingSubchapters.length; i++) {
 
     var existingSubchapter = existingSubchapters.item(i);
@@ -71,11 +66,12 @@ for (let i=0; i < existingSubchapters.length; i++) {
 
     createQuillEditor(newEditorElement, editorInput, newToolbarElement);
 
+    //Update the editors value to the input.
     newEditorElement.querySelector('.ql-editor').innerHTML = editorInput.value;
 
 }
 
-
+// This is just an Quality of life function to create a new Editor.
 function createQuillEditor(editorElement, editorInput, toolbarElement) {
 
     var newEditor = new Quill(editorElement, {
@@ -95,6 +91,8 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
     newEditor.enable(true);
 }
 
+// This manually creates all the html elements with their styles for a subchapter
+// It returns the Subchapter Holder DIV
 function createNewSubchapterElement() {
     var subchapterHolder = document.createElement('div');
     subchapterHolder.classList.add('subchapter_holder');
@@ -149,6 +147,8 @@ function createNewSubchapterElement() {
     return subchapterHolder;
 }
 
+// Calls the createNewSubchapter and createQuillEditor functions
+// And adds the subchapter to the html page.
 function addSubChapter() {
     var clone =  createNewSubchapterElement();
     console.log(clone.innerHTML);
@@ -160,6 +160,7 @@ function addSubChapter() {
     createQuillEditor(new_editor_ele, editor_input, new_toolbar_ele);
 }
 
+//Saves all the info of the current create/edit page with the use of 'localstorage.set'
 function saveChangelogPage() {
 
     if (document.getElementById("body_input").value === "") {
@@ -177,6 +178,7 @@ function saveChangelogPage() {
     console.log("Saved Changelogs");
 }
 
+//Loads the info of the items stored about the changelog page in the localstorage
 function loadChangelogPage() {
 
     document.getElementById("title_input").value = localStorage.getItem("title_input");
@@ -188,6 +190,7 @@ function loadChangelogPage() {
     console.log("Loaded Changelog");
 }
 
+//Saves all the info of the current create/edit page with the use of 'localstorage.set'
 function saveDocumentationPage() {
 
     if (document.getElementById("body_input").value === "") {
@@ -210,6 +213,7 @@ function saveDocumentationPage() {
     console.log("Saved Documentation");
 }
 
+//Loads the info of the items stored about the changelog page in the localstorage
 function loadDocumentationPage() {
 
     document.getElementById("title_input").value = localStorage.getItem("title_input");
@@ -236,16 +240,9 @@ function loadDocumentationPage() {
 
     console.log("Loaded Documentation");
 }
-/*
-<div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
 
-                        <h4 class="edit-title">{{ $commit->commiter }} </h2>
-                        <h6 class="version-title"> versie: {{ $commit->message }} </h4>
-
-                        <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
-                        <hr>
-                    </div>
-*/
+// Creates a new commit element
+// Then adds it to the commit-holder on the html page
 function createNewCommitElement(index, commiter, message, date) {
     var commit_ele = document.createElement("div");
     commit_ele.classList.add("commit");
@@ -275,6 +272,8 @@ function createNewCommitElement(index, commiter, message, date) {
     commit_holder.appendChild(commit_ele);
 }
 
+// iterates through an array of commits
+// Then uses createNewCommitElement to add them to the html page
 function parseCommits(index, commits) {
 
     for (let i=0; i<commits.length; i++) {
@@ -286,6 +285,8 @@ function parseCommits(index, commits) {
     }
 }
 
+// Hides or shows the commits
+// If the commits arent yet loaded it will send an XMLHtppRequest to the server to get the commits.
 function toggleCommits(index, changelog_id, previous_id) {
 
 

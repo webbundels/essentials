@@ -22,13 +22,21 @@ class ChangelogController extends Controller
         View::share('section', 'changelog');
     }
 
+    // Gathers some commits info
+    // Sends the following structure with the view:
+    /* 'sorted_items' - array [
+     *  'commit_count' - int,
+     *  'changelog' - ChangelogChapter,
+     *  'changelog_id' - int,
+     *  'previous_id' - int (can be -1)
+     * ]
+     */
     public function index(ViewChangelogRequest $request)
     {
         $changelogChapters = ChangelogChapter::get()->sortByDesc('created_at');
         $sorted_items = collect();
         $previous_chapter = null;
 
-        // URL : https://github.com/webbundels/essentials/commits/dev?since=2025-02-13&until=2025-02-17
         foreach ($changelogChapters as $index => $chapter) {
             $commits_count = null;
 
@@ -45,11 +53,10 @@ class ChangelogController extends Controller
                 'commit_count' => $commits_count,
                 'changelog' => $chapter,
                 'changelog_id' => $chapter->id,
-                'previous_id' => $previous_id,
-                //'URL' => 'https://github.com/'.EssentialsServiceProvider::getGithubRepo().'/commits?since='.$sorted_commits->first()->created_at->format('y-m-d').'&until='.$sorted_commits->last()->created_at->format('y-m-d')
+                'previous_id' => $previous_id
             ]);
+
             $previous_chapter = $chapter;
-            //["extraCommits" => [], ["commits" => [], "changelog" => null], ]
         }
 
 
@@ -65,6 +72,7 @@ class ChangelogController extends Controller
         return view('EssentialsPackage::changelog.create_edit', compact('changelogChapter', 'titles'));
     }
 
+    // Note the created_at is filled in manually.
     public function store(StoreChangelogRequest $request)
     {
         $changelogChapter = new ChangelogChapter();

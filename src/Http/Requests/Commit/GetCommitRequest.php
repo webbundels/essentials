@@ -4,7 +4,7 @@ namespace Webbundels\Essentials\Http\Requests\Commit;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
-
+// somewhat unused
 class GetCommitRequest extends FormRequest
 {
     /**
