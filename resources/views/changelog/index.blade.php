@@ -3,6 +3,14 @@
 @section('body_id', 'index')
 
 @section('content')
+
+    <div class="button-holder">
+        @if (Auth::user()->changelog_editable)
+            <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
+            <a id="refresh_commits_button" class="styled-button" href="{{ route('commit.refresh') }}"> Refresh Commits </a>
+        @endif
+    </div>
+
     <div id="header_holder">
         <div class="header">
             <a id="home_button" class="back-button" href="/">
@@ -18,13 +26,6 @@
     </div>
 
     <div id="changelog_holder">
-
-        <div class="button-holder">
-            @if (Auth::user()->changelog_editable)
-                <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuw hoofdstuk</a>
-                <a id="refresh_commits_button" class="styled-button" href="{{ route('commit.refresh') }}"> Refresh Commits </a>
-            @endif
-        </div>
 
         <div data-changelog-container class="changelog-container">
             @foreach ($sorted_items as $index => $item)

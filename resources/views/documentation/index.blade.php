@@ -5,6 +5,13 @@
 @section('title', 'documentation')
 
 @section('content')
+
+    @if (Auth::user()->documentation_editable)
+        <div class="button-holder">
+            <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
+        </div>
+    @endif
+
     <div id="header_holder">
         <div class="header">
             <a id="home_button" class="back-button" href="/">
@@ -21,18 +28,13 @@
     </div>
 
     <div id="documentation_holder">
-            <div class="button-holder">
-                @if (Auth::user()->documentation_editable)
-                    <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
-                @endif
-            </div>
 
         <div id="table_of_contents">
             @foreach ($documentationChapters as $documentationChapter)
                 <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">{{ $documentationChapter->title }}</a>
 
                 @foreach ($documentationChapter->subchapters as $subchapter)
-                    <a href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}" style="font-size: 60%; margin-top: -1vh; margin-left: 2vw;"> {{ $subchapter->title }} </a>
+                    <a class="subchapter" href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}"> {{ $subchapter->title }} </a>
                 @endforeach
             @endforeach
         </div>

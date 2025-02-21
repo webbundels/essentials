@@ -30,7 +30,7 @@ if (document.getElementById('edit') !== null) {
         modules: {
             toolbar: '#toolbar'
         },
-        placeholder: 'Inhoud...',
+        placeholder: '',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -83,7 +83,7 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
         modules: {
             toolbar: toolbarElement
         },
-        placeholder: 'Inhoud...',
+        placeholder: '',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -98,8 +98,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
 function createNewSubchapterElement() {
     var subchapterHolder = document.createElement('div');
     subchapterHolder.classList.add('subchapter_holder');
-    subchapterHolder.style.marginTop = '20vh';
-/////
 
     var subchapterToolbar = document.createElement('div');
     subchapterToolbar.classList.add('sub_toolbar');
@@ -112,9 +110,6 @@ function createNewSubchapterElement() {
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
     subTitle.classList.add("subchapter_title_input");
-    subTitle.placeholder = 'SubChapter title';
-    subTitle.style.marginTop = '2vh';
-    subTitle.style.marginLeft = '2vw';
 
     subTitle.required = true;
 
@@ -124,9 +119,6 @@ function createNewSubchapterElement() {
     subchapterEditor.classList.add('subchapter_editor');
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
-    subchapterEditor.placeholder = 'desc...';
-    subTitle.style.marginTop = '2vh';
-    subTitle.style.marginLeft = '2vw';
     subchapterHolder.appendChild(subchapterEditor);
 
     subchapterEditor.required = true;
