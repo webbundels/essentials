@@ -55,7 +55,7 @@
 
                             </div>
 
-                            <input type="text" class="subchapter_title_input" name="sub_title[]" placeholder="Subchapter title" style="margin-top: 2vh; margin-left: 2vw; visibility:" value="{{ $subchapter->title }}">
+                            <input type="text" class="subchapter_title_input" name="sub_title[]" placeholder="Subchapter title" style="margin-top: 2vh; margin-left: 2vw;" value="{{ $subchapter->title }}">
                             <input class="subchapter_editor" type="hidden" name="sub_body[]" placeholder="desc..." style="margin-top: 2vh; margin-left: 2vw;" value="{{ $subchapter->body }}">
                             <input type="hidden" name="sub_id[]" value="{{ $subchapter->id }}">
 
