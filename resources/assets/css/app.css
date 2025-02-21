@@ -68,6 +68,15 @@ body{
     }
 }
 
+.recover-session-button{
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #e9f1ff;
+    padding: 10px;
+    margin-bottom: 40px;
+}
+
 /* FLOATING BUTTON HOLDER */
 .button-holder {
     position: fixed;
