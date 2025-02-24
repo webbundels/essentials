@@ -76,7 +76,7 @@ class DocumentationController extends Controller
                 $new_subchapter->fill($subchapter);
 
                 $new_subchapter->save();
-            } else {
+            } else if ($subchapter['id'] > -1) {
                 // Do not update the Id since its a '-1'
                 SubChapter::where('id', $subchapter['id'])->update(Arr::except($subchapter, ['id']));
             }

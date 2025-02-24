@@ -112,30 +112,31 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
     newEditor.enable(true);
 }
 
+function deleteSubchapter(id) {
+    console.log("HELLO");
+}
+
+var subchapter_temp_id = 1;
+
 // This manually creates all the html elements with their styles for a subchapter
 // It returns the Subchapter Holder DIV
 function createNewSubchapterElement() {
     var subchapterHolder = document.createElement('div');
     subchapterHolder.classList.add('subchapter_holder');
-
-    var subchapterToolbar = document.createElement('div');
-    subchapterToolbar.classList.add('sub_toolbar');
-
-    subchapterToolbar.innerHTML = document.getElementById("toolbar").innerHTML;
-
-    subchapterHolder.appendChild(subchapterToolbar);
+    subchapterHolder.id = "subchapter_temp_" + subchapter_temp_id;
+    subchapter_temp_id++;
 
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
-    subTitle.classList.add("subchapter_title_input");
+    subTitle.classList.add("subchapter-title-input");
 
     subTitle.required = true;
 
     subchapterHolder.appendChild(subTitle);
 
     var subchapterEditor = document.createElement('input');
-    subchapterEditor.classList.add('subchapter_editor');
+    subchapterEditor.classList.add('subchapter-editor');
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
     subchapterHolder.appendChild(subchapterEditor);
@@ -150,9 +151,25 @@ function createNewSubchapterElement() {
     subchapterHolder.appendChild(idInput);
 
     var subchapterEditorHolder = document.createElement('div');
-    subchapterEditorHolder.classList.add('subchapter_editor');
+    subchapterEditorHolder.classList.add('subchapter-editor');
 
     subchapterHolder.appendChild(subchapterEditorHolder);
+
+    //<div class="styled-button" type="button" onclick="removeSubchapter()"> Verwijderen </div>
+
+    var deleteButton = document.createElement("div");
+    deleteButton.classList.add("styled-button");
+    deleteButton.classList.add("delete-subchapter-button");
+    deleteButton.type = "button";
+    deleteButton.innerHTML = "Verwijderen";
+    deleteButton.onclick = function() {
+        subchapterHolder.style.display = "none";
+        idInput.value = "-2";
+        subTitle.required = false;
+        subchapterEditor.required = false;
+    };
+
+    subchapterHolder.appendChild(deleteButton);
 
     var subchaptersHolder = document.getElementById('subchapter_list');
     subchaptersHolder.appendChild(subchapterHolder);
@@ -166,8 +183,8 @@ function addSubChapter() {
     var clone =  createNewSubchapterElement();
     console.log(clone.innerHTML);
 
-    var new_editor_ele = clone.getElementsByClassName("subchapter_editor")[1];
-    const editor_input = clone.getElementsByClassName("subchapter_editor")[0];
+    var new_editor_ele = clone.getElementsByClassName("subchapter-editor")[1];
+    const editor_input = clone.getElementsByClassName("subchapter-editor")[0];
     var new_toolbar_ele = clone.getElementsByClassName('sub_toolbar')[0];
 
     createQuillEditor(new_editor_ele, editor_input, new_toolbar_ele);
