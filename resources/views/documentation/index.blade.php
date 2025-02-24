@@ -9,6 +9,7 @@
     @if (Auth::user()->documentation_editable)
         <div class="button-holder">
             <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
+            <a id="change-sequence" class="styled-button" onclick="toggleSequence()"> Verander Volgorde </a>
         </div>
     @endif
 
@@ -58,8 +59,9 @@
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
                     <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:m') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
+                    <div class="ql-container ql-bubble">
                     {!! $documentationChapter->body !!}
-
+                    </div>
 
                     @foreach ($documentationChapter->subchapters->sortBy('sequence') as $subchapter)
                         <hr>
@@ -69,7 +71,7 @@
 
                                 @if (Auth::user()->documentationEditable)
                                 {{-- This form is for moving subchapters up and down --}}
-                                <form  method="post"  id="move_form", action="{{ route('subchapter.change_order', ['id' => $subchapter->id ]) }}">
+                                <form  method="post" class="move-form" style="display: none" id="move_form", action="{{ route('subchapter.change_order', ['id' => $subchapter->id ]) }}">
                                     @csrf
                                         @if ($loop->count > 1) 
                                             @if ($loop->first)

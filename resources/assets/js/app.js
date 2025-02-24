@@ -98,6 +98,30 @@ function submitForm() {
 
 }
 
+function toggleSequence() {
+    var form = document.getElementById("change-sequence");
+
+    if (form.innerHTML == "Verander Volgorde") {
+        var forms = document.getElementsByClassName("move-form");
+        
+        for (let i=0; i<forms.length; i++) {
+            forms[i].style.display = "inherit";
+        }
+
+        document.getElementById("change-sequence").style.display = "none";
+    } else {
+
+
+        var forms = document.getElementsByClassName("move-form");
+        for (let i=0; i<forms.length; i++) {
+            forms[i].style.display = "none";
+        }
+
+        document.getElementById("change-sequence").innerHTML = "Verander Volgorde";
+
+    }
+}
+
 // This is just an Quality of life function to create a new Editor.
 function createQuillEditor(editorElement, editorInput, toolbarElement) {
 
