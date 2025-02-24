@@ -13,17 +13,15 @@
 
         <form method="post" id="form" class="changelogForm" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
             @csrf
-            <label class="styled-label" for="title">
-                <input type="text" name="title" placeholder="Titel" id="title_input" value="{{ old('title', $changelogChapter->title) }}">
-            </label>
-
+                <input style="display: none;" type="text" name="title" placeholder="Titel" id="title_input" value="empty">
+            
             <label class="styled-label" for="version">
                 <span>Versie</span>
                 <input type="text" name="version" id="version_input" placeholder="versie" value="{{ old('body', $changelogChapter->version) }}">
             </label>
 
             <label class="styled-label" for="created_at">
-                <span>Gemaakt op</span>
+                <span>Datum </span>
                 <input type="date" name="created_at" id="date_input" value="{{ $changelogChapter->created_at != null ? old('created_at', $changelogChapter->created_at->format('Y-m-d')) : '' }}">
             </label>
 
@@ -43,7 +41,7 @@
                 @if ($changelogChapter->id)
                     <input type="button" data-href="{{ route('changelog.delete', ['id' => $changelogChapter->id]) }}" onclick="deleteChapter(this.dataset)" class="styled-button cancel" value="Verwijderen">
                 @endif
-                <input class="styled-button save" data-save-button type="submit" onclick="localStorage.clear()" value="Opslaan">
+                <input class="styled-button save" data-save-button type="submit"  value="Opslaan">
             </div>
         </form>
     </div>

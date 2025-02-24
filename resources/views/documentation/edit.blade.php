@@ -13,7 +13,7 @@
         @endforeach
 
         <div class="recover-session-button" id="recover_session_button" onclick="loadDocumentationPage()">
-            Laad vorige Sessie.
+            Herstel laatste concept.
         </div>
 
         <form method="post" class="documentationForm" id="form", action="{{ $documentationChapter->id ? route('documentation.update', ['id' => $documentationChapter->id]) : route('documentation.store') }}">
@@ -62,7 +62,7 @@
                 @if ($documentationChapter->id)
                     <input type="button" data-href="{{ route('documentation.delete', ['id' => $documentationChapter->id]) }}" onclick="deleteChapter(this.dataset)" class="styled-button cancel" value="Verwijderen">
                 @endif
-                <input class="styled-button save" data-save-button type="submit"  onclick="localStorage.clear()" value="Opslaan">
+                <input class="styled-button save" data-save-button type="submit"  onclick="submitForm()" value="Opslaan">
             </div>
         </form>
 

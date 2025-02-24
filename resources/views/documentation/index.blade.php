@@ -39,6 +39,19 @@
             @endforeach
         </div>
 
+
+        <div class="side-content-table" id="table_of_contents">
+            @foreach ($documentationChapters as $documentationChapter)
+                <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">{{ $documentationChapter->title }}</a>
+
+                @foreach ($documentationChapter->subchapters as $subchapter)
+                    <a class="subchapter" href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}"> {{ $subchapter->title }} </a>
+                @endforeach
+            @endforeach
+        </div>
+
+
+
         <div data-documentation-container class="documentation-container">
             @foreach ($documentationChapters as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">

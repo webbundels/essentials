@@ -6,8 +6,8 @@
 
     <div class="button-holder">
         @if (Auth::user()->changelog_editable)
-            <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuwe Update </a>
-            <a id="refresh_commits_button" class="styled-button" href="{{ route('commit.refresh') }}"> Refresh Commits </a>
+            <a id="new_chapter_button" class="styled-button" href="{{ route('changelog.create') }}">Nieuwe update </a>
+            <a id="refresh_commits_button" class="styled-button" href="{{ route('commit.refresh') }}"> Refresh commits </a>
         @endif
     </div>
 
@@ -50,10 +50,10 @@
 
                 @if($item['changelog'] != null)
                     <div class="changelog-chapter">
-                        <h2 class="edit-title">{{ $item['changelog']->title }} </h2>
+                        {{-- <h2 class="edit-title">{{ $item['changelog']->title }} </h2> --}}
                         <h4 class="version-title"> versie: {{ $item['changelog']->version }} </h4>
 
-                        <h3 class="date-title"> Datum: {{ $item['changelog']->created_at->format('d-m-Y h:i') }} </h3>
+                        <h3 class="date-title">{{ $item['changelog']->created_at->format('d-m-Y h:i') }} </h3>
 
                         <div class="changelog-body">
                             {!! $item['changelog']->body !!}

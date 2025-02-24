@@ -5,7 +5,7 @@ const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['link'],
   
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
     [{ 'size': ['small', false, 'large', 'huge'] }],
   
@@ -92,6 +92,12 @@ for (let i=0; i < existingSubchapters.length; i++) {
 
 }
 
+function submitForm() {
+    localStorage.clear();
+    
+
+}
+
 // This is just an Quality of life function to create a new Editor.
 function createQuillEditor(editorElement, editorInput, toolbarElement) {
 
@@ -100,7 +106,7 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
         modules: {
             toolbar: toolbarOptions,
         },
-        placeholder: '',
+        placeholder: 'Inhoud...',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -126,20 +132,44 @@ function createNewSubchapterElement() {
     subchapterHolder.id = "subchapter_temp_" + subchapter_temp_id;
     subchapter_temp_id++;
 
+    
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
+    subTitle.placeholder = "Titel";
     subTitle.classList.add("subchapter-title-input");
 
     subTitle.required = true;
 
-    subchapterHolder.appendChild(subTitle);
+
+    var labelTitle = document.createElement('label');
+    labelTitle.for = "sub_title[]";
+    
+    var labelSpan = document.createElement("span");
+    labelSpan.innerHTML = "Titel";
+    labelTitle.appendChild(labelSpan);
+
+
+    labelTitle.appendChild(subTitle);
+    subchapterHolder.append(labelTitle);
 
     var subchapterEditor = document.createElement('input');
     subchapterEditor.classList.add('subchapter-editor');
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
-    subchapterHolder.appendChild(subchapterEditor);
+
+
+    labelTitle = document.createElement('label');
+    labelTitle.for = "sub_body[]";
+    
+    labelSpan = document.createElement("span");
+    labelSpan.innerHTML = "Inhoud";
+    labelTitle.appendChild(labelSpan);
+
+
+    labelTitle.appendChild(subchapterEditor);
+    subchapterHolder.append(labelTitle);
+
 
     subchapterEditor.required = true;
 
@@ -260,7 +290,7 @@ function loadDocumentationPage() {
         return;
     }
 
-    if (confirm("Weet je zeker dat je de vorige sessie wilt laden?") == false) {
+    if (confirm(" Weet je zeker dat je het laatste concept wilt laden?") == false) {
         console.log("Did not load");
         return;
     }
