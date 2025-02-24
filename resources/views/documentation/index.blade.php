@@ -5,8 +5,21 @@
 @section('title', 'documentation')
 
 @section('content')
+
+    @if (Auth::user()->documentation_editable)
+        <div class="button-holder">
+            <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
+        </div>
+    @endif
+
     <div id="header_holder">
         <div class="header">
+            <a id="home_button" class="back-button" href="/">
+                Terug naar de applicatie
+            </a>
+            <a id="changelog_button" class="switch-button" href="{{route('changelog.index')}}">
+                Naar het changelog
+            </a>
             <h1>
                 {{ config('app.name') }}<br/>
                 documentatie
@@ -15,22 +28,13 @@
     </div>
 
     <div id="documentation_holder">
-            <div class="button-holder">
-
-                <a id="home_button" class="styled-button" href="/"> Home </a>
-                <a id="changelog_button" class="styled-button" href="{{route('changelog.index')}}"> Changelog </a>
-                @if (Auth::user()->documentation_editable)
-                    <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
-                @endif
-
-            </div>
 
         <div id="table_of_contents">
             @foreach ($documentationChapters as $documentationChapter)
                 <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">{{ $documentationChapter->title }}</a>
 
                 @foreach ($documentationChapter->subchapters as $subchapter)
-                    <a href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}" style="font-size: 60%; margin-top: -1vh; margin-left: 2vw;"> {{ $subchapter->title }} </a>
+                    <a class="subchapter" href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}"> {{ $subchapter->title }} </a>
                 @endforeach
             @endforeach
         </div>
@@ -39,7 +43,7 @@
             @foreach ($documentationChapters as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
-                    <h3 class="last-updated" style="font-style: italic; color: gray;"> Bijgewerkt op: {{ $documentationChapter->updated_at->format('d/m/y H:m') }} </h3>
+                    <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:m') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
                     {!! $documentationChapter->body !!}
 
@@ -54,13 +58,15 @@
                                 {{-- This form is for moving subchapters up and down --}}
                                 <form  method="post"  id="move_form", action="{{ route('subchapter.change_order', ['id' => $subchapter->id ]) }}">
                                     @csrf
-                                        @if ($loop->first)
-                                            <button name="new_move" type="submit" value="1"> Down </button>
-                                        @elseif ($loop->last)
-                                            <button name="new_move" type="submit" value="-1"> Up </button>
-                                        @else
-                                            <button name="new_move" type="submit" value="-1"> Up </button>
-                                            <button name="new_move" type="submit" value="1"> Down </button>
+                                        @if ($loop->count > 1) 
+                                            @if ($loop->first)
+                                                <button name="new_move" type="submit" value="1"> Down </button>
+                                            @elseif ($loop->last)
+                                                <button name="new_move" type="submit" value="-1"> Up </button>
+                                            @else
+                                                <button name="new_move" type="submit" value="-1"> Up </button>
+                                                <button name="new_move" type="submit" value="1"> Down </button>
+                                            @endif
                                         @endif
 
                                         <input type="hidden" name="documentation_id" value={{ $documentationChapter->id }}>

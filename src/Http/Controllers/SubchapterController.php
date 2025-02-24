@@ -86,6 +86,6 @@ class SubchapterController extends Controller
         }
 
         return redirect()
-            ->route('documentation.index');
+            ->route('documentation.index', ["#subchapter-".$subchapter->find($id)->title]);
     }
 }

@@ -52,7 +52,7 @@ class ComposerStaticInit5d500fe61e89d1f245a9854931672d2a
         array (
             'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
-            'Webbundels\\Changelog\\' => 21,
+            'Webbundels\\Essentials\\' => 22,
         ),
         'T' => 
         array (
@@ -194,7 +194,7 @@ class ComposerStaticInit5d500fe61e89d1f245a9854931672d2a
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Webbundels\\Changelog\\' => 
+        'Webbundels\\Essentials\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

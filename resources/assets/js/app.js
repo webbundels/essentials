@@ -1,6 +1,19 @@
 const Parchment = Quill.import('parchment');
 const customRegistry = new Parchment.Registry();
 
+const toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['link'],
+  
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+  
+    [{ 'color': [] }],
+  
+    ['clean']                                         // remove formatting button
+  ];
+  
 
 const SAVE_DELAY_MS = 30 * 1000;
 
@@ -9,9 +22,15 @@ const SAVE_DELAY_MS = 30 * 1000;
 if (document.getElementById("form") != null) {
     if (document.getElementById("documentation_holder") != null) {
         setInterval(saveDocumentationPage, SAVE_DELAY_MS);
-    } else {
-        setInterval(saveChangelogPage, SAVE_DELAY_MS);
+    }// else {
+       // setInterval(saveChangelogPage, SAVE_DELAY_MS);
+    //}
+
+    if (localStorage.getItem("title_input") == "") {
+        document.getElementById("recover_session_button").style.display = "none";
+    
     }
+
 }
 // When we are in the create/edit page we need to setup the main quill editor
 if (document.getElementById('edit') !== null) {
@@ -22,9 +41,9 @@ if (document.getElementById('edit') !== null) {
     const editor = new Quill(editorEle, {
         customRegistry,
         modules: {
-            toolbar: '#toolbar'
+            toolbar: toolbarOptions,
         },
-        placeholder: 'Inhoud...',
+        placeholder: '',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -52,9 +71,11 @@ if (document.getElementById('edit') !== null) {
     }
 }
 
+
+
 // For the edit page we automatically load the subchapters with their bodies.
 // But the Quilljs editor arent setup for them yet, so we need to do it now.
-var existingSubchapters = document.getElementsByClassName("subchapter_holder");
+var existingSubchapters = document.getElementsByClassName("subchapter-holder");
 for (let i=0; i < existingSubchapters.length; i++) {
 
     var existingSubchapter = existingSubchapters.item(i);
@@ -77,9 +98,9 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
     var newEditor = new Quill(editorElement, {
         customRegistry,
         modules: {
-            toolbar: toolbarElement
+            toolbar: toolbarOptions,
         },
-        placeholder: 'Inhoud...',
+        placeholder: '',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -96,8 +117,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
 function createNewSubchapterElement() {
     var subchapterHolder = document.createElement('div');
     subchapterHolder.classList.add('subchapter_holder');
-    subchapterHolder.style.marginTop = '20vh';
-/////
 
     var subchapterToolbar = document.createElement('div');
     subchapterToolbar.classList.add('sub_toolbar');
@@ -110,9 +129,6 @@ function createNewSubchapterElement() {
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
     subTitle.classList.add("subchapter_title_input");
-    subTitle.placeholder = 'SubChapter title';
-    subTitle.style.marginTop = '2vh';
-    subTitle.style.marginLeft = '2vw';
 
     subTitle.required = true;
 
@@ -122,9 +138,6 @@ function createNewSubchapterElement() {
     subchapterEditor.classList.add('subchapter_editor');
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
-    subchapterEditor.placeholder = 'desc...';
-    subTitle.style.marginTop = '2vh';
-    subTitle.style.marginLeft = '2vw';
     subchapterHolder.appendChild(subchapterEditor);
 
     subchapterEditor.required = true;
@@ -181,6 +194,13 @@ function saveChangelogPage() {
 //Loads the info of the items stored about the changelog page in the localstorage
 function loadChangelogPage() {
 
+
+
+    if (localStorage.getItem("title_input") == "") {
+        console.log("Did not load");
+        return;
+    }
+
     document.getElementById("title_input").value = localStorage.getItem("title_input");
     document.getElementById("version_input").value = localStorage.getItem("version_input");
     document.getElementById("date_input").value = localStorage.getItem("date_input");
@@ -215,6 +235,19 @@ function saveDocumentationPage() {
 
 //Loads the info of the items stored about the changelog page in the localstorage
 function loadDocumentationPage() {
+
+
+    if (localStorage.getItem("title_input") == "") {
+        console.log("Did not load");
+        alert("Je vorige sessie was leeg, dus het kan niet geladen worden.");
+        return;
+    }
+
+    if (confirm("Weet je zeker dat je de vorige sessie wilt laden?") == false) {
+        console.log("Did not load");
+        return;
+    }
+
 
     document.getElementById("title_input").value = localStorage.getItem("title_input");
 

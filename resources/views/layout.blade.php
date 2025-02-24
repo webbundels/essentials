@@ -14,12 +14,13 @@
             {!! file_get_contents(base_path('vendor/webbundels/essentials/resources/assets/css/app.css')) !!}
             {!! file_get_contents(base_path('vendor/webbundels/essentials/resources/assets/css/'.$section.'.css')) !!}
         </style>
-        <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+        <link href="//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet">
         <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700,800" rel="stylesheet">
     </head>
 
     <body id="@yield('body_id')">
         @yield('content')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         @yield('scripts')
         <script type="text/javascript">

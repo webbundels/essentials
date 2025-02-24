@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'webbundels/changelog',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'eb15b035e132120b5039994c401b0b3e9a3b3523',
+        'name' => 'webbundels/essentials',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '05dcd7c1c50699da57e3ef89e66022f62b362916',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1337,10 +1337,10 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'webbundels/changelog' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'eb15b035e132120b5039994c401b0b3e9a3b3523',
+        'webbundels/essentials' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '05dcd7c1c50699da57e3ef89e66022f62b362916',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
