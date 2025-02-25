@@ -36,6 +36,30 @@ class DocumentationController extends Controller
         return view('EssentialsPackage::documentation.edit', compact('documentationChapter'));
     }
 
+
+    public function changeOrder(ChangeOrderDocumentationRequest $request) {
+
+        $documentationChapters = DocumentationChapter::all();
+
+        $new_sequence = (int) $request['current_sequence'] + (int) $request['new_move'];
+
+        foreach($documentationChapters as $documentationChapter) {
+
+                if ($documentationChapter->id == (int) $request['documentation_id']) {
+                    $documentationChapter->sequence = $new_sequence; //1 -> 2
+                    $documentationChapter->save();
+
+                } else if ($documentationChapter->sequence == $new_sequence) { //2
+                    $documentationChapter->sequence = (int) $request['current_sequence'];
+                    $documentationChapter->save(); // 2 -> 1
+                }
+        }
+
+        return redirect()
+            ->route('documentation.index', ["#chapter-".$documentationChapter::find($request['documentation_id'])->title]);
+
+    }
+
     //Converts a request form to an array with subchapter items
     //Note: these ARE NOT actuall subchapter model but they do share the same structure
     private function parseSubchapterInfo($data) {

@@ -142,10 +142,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
     newEditor.enable(true);
 }
 
-function deleteSubchapter(id) {
-    console.log("HELLO");
-}
-
 var subchapter_temp_id = 1;
 
 // This manually creates all the html elements with their styles for a subchapter
@@ -217,10 +213,14 @@ function createNewSubchapterElement() {
     deleteButton.type = "button";
     deleteButton.innerHTML = "Verwijderen";
     deleteButton.onclick = function() {
-        subchapterHolder.style.display = "none";
-        idInput.value = "-2";
-        subTitle.required = false;
-        subchapterEditor.required = false;
+        if (confirm("Weet je zeker dat je dit subhoofdstuk wil verwijderen?") == true) {
+
+
+            subchapterHolder.style.display = "none";
+            idInput.value = "-2";
+            subTitle.required = false;
+            subchapterEditor.required = false;
+        }
     };
 
     subchapterHolder.appendChild(deleteButton);

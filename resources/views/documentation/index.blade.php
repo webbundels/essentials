@@ -54,11 +54,30 @@
 
 
         <div data-documentation-container class="documentation-container">
-            @foreach ($documentationChapters as $documentationChapter)
+            @foreach ($documentationChapters->sortBy('sequence') as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
                     <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:m') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
+                    @if (Auth::user()->documentationEditable)
+                                {{-- This form is for moving subchapters up and down --}}
+                                <form  method="post" class="move-form" style="display: none" id="move_form", action="{{ route('documentation.change_order') }}">
+                                    @csrf
+                                        @if ($loop->count > 1) 
+                                            @if ($loop->first)
+                                                <button class="move-down-button" name="new_move" type="submit" value="1"> Down </button>
+                                            @elseif ($loop->last)
+                                                <button class="move-up-button" name="new_move" type="submit" value="-1"> Up </button>
+                                            @else
+                                                <button class="move-up-button" name="new_move" type="submit" value="-1"> Up </button>
+                                                <button class="move-down-button" name="new_move" type="submit" value="1"> Down </button>
+                                            @endif
+                                        @endif
+
+                                        <input type="hidden" name="documentation_id" value={{ $documentationChapter->id }}>
+                                        <input type="hidden" name="current_sequence" value={{ $documentationChapter->sequence }}>
+                                </form>
+                                @endif
                     <div class="ql-container ql-bubble">
                     {!! $documentationChapter->body !!}
                     </div>
