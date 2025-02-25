@@ -102,13 +102,12 @@ function toggleSequence() {
     var form = document.getElementById("change-sequence");
 
     if (form.innerHTML == "Verander Volgorde") {
-        var forms = document.getElementsByClassName("move-form");
-        
+        var forms = document.getElementsByClassName("move-form")
         for (let i=0; i<forms.length; i++) {
             forms[i].style.display = "inherit";
         }
 
-        document.getElementById("change-sequence").style.display = "none";
+        document.getElementById("change-sequence").innerHTML = "Klaar";
     } else {
 
 

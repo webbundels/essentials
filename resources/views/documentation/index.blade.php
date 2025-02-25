@@ -9,7 +9,7 @@
     @if (Auth::user()->documentation_editable)
         <div class="button-holder">
             <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
-            <a id="change-sequence" class="styled-button" onclick="toggleSequence()"> Verander Volgorde </a>
+            <a id="change-sequence" class="styled-button" onclick="toggleSequence()">Verander Volgorde</a>
         </div>
     @endif
 
