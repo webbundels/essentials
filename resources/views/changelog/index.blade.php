@@ -36,6 +36,8 @@
 
                         <h4> repo: {{ $commit_info['commit_repo'] }} </h4>
 
+                        <a href={{ $commit_info['url'] }}> Github </a>
+
                     <a id="toggle-button-{{$index}}-{{$sub_index}}" onclick="toggleCommits({{$index}}, {{$sub_index}}, {{$commit_info['changelog_id']}}, {{$commit_info['previous_id']}},   '{{ $commit_info['commit_repo'] }}' )"> show </a>
                     <div id="commit-holder-{{$index}}-{{$sub_index}}" style="display: none;">
                     {{-- @foreach($item['commits'] as $commit)

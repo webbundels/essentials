@@ -51,18 +51,23 @@ class ChangelogController extends Controller
 
             foreach($repos as $repo) {
 
+                $url = "https://github.com/".env("GITHUB_OWNER")."/";
+
                 if (! $previous_chapter) {
                     $commits_count = Commit::where('created_at', '>', $chapter->created_at)->where('repository', '=', $repo)->count();
+                    $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->created_at->format('Y-m-d');
                 } else {
                     $previous_id = $previous_chapter->id;
                     $commits_count =  Commit::whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at])->where('repository', '=', $repo)->count();
+                    $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->created_at->format('Y-m-d').'&until='.$previous_chapter->created_at->format('Y-m-d');
                 }
 
                 $commit_info->push([
                     'commit_repo' => $repo,
                     'commit_count' => $commits_count,
                     'changelog_id' => $chapter->id,
-                    'previous_id' => $previous_id
+                    'previous_id' => $previous_id,
+                    'url' => $url,
                 ]);
 
             }
@@ -90,7 +95,8 @@ class ChangelogController extends Controller
                         'commit_repo' => $repo,
                         'commit_count' => $commits_count,
                         'changelog_id' => $chapter->id,
-                        'previous_id' => -2
+                        'previous_id' => -2,
+                        'url' => "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?until='.$previous_chapter->created_at->format('Y-m-d')
                     ]);
 
                 }
