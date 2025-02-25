@@ -101,7 +101,7 @@ function submitForm() {
 function toggleSequence() {
     var form = document.getElementById("change-sequence");
 
-    if (form.innerHTML == "Verander Volgorde") {
+    if (form.innerHTML == "Wijzig Volgorde") {
         var forms = document.getElementsByClassName("move-form")
         for (let i=0; i<forms.length; i++) {
             forms[i].style.display = "inherit";
@@ -116,7 +116,7 @@ function toggleSequence() {
             forms[i].style.display = "none";
         }
 
-        document.getElementById("change-sequence").innerHTML = "Verander Volgorde";
+        document.getElementById("change-sequence").innerHTML = "Wijzig Volgorde";
 
     }
 }
