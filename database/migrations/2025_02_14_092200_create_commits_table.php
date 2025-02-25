@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('commiter');
             $table->string('message');
+            $table->string('repository');
             $table->timestamps();
         });
     }

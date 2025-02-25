@@ -4,16 +4,16 @@ const customRegistry = new Parchment.Registry();
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['link'],
-  
+
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
     [{ 'size': ['small', false, 'large', 'huge'] }],
-  
+
     [{ 'color': [] }],
-  
+
     ['clean']                                         // remove formatting button
   ];
-  
+
 
 const SAVE_DELAY_MS = 30 * 1000;
 
@@ -28,7 +28,7 @@ if (document.getElementById("form") != null) {
 
     if (localStorage.getItem("title_input") == "") {
         document.getElementById("recover_session_button").style.display = "none";
-    
+
     }
 
 }
@@ -96,7 +96,7 @@ for (let i=0; i < existingSubchapters.length; i++) {
 
 function submitForm() {
     localStorage.clear();
-    
+
 
 }
 
@@ -153,7 +153,7 @@ function createNewSubchapterElement() {
     subchapterHolder.id = "subchapter_temp_" + subchapter_temp_id;
     subchapter_temp_id++;
 
-    
+
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
@@ -165,7 +165,7 @@ function createNewSubchapterElement() {
 
     var labelTitle = document.createElement('label');
     labelTitle.for = "sub_title[]";
-    
+
     var labelSpan = document.createElement("span");
     labelSpan.innerHTML = "Titel";
     labelTitle.appendChild(labelSpan);
@@ -182,7 +182,7 @@ function createNewSubchapterElement() {
 
     labelTitle = document.createElement('label');
     labelTitle.for = "sub_body[]";
-    
+
     labelSpan = document.createElement("span");
     labelSpan.innerHTML = "Inhoud";
     labelTitle.appendChild(labelSpan);
@@ -348,7 +348,7 @@ function loadDocumentationPage() {
 
 // Creates a new commit element
 // Then adds it to the commit-holder on the html page
-function createNewCommitElement(index, commiter, message, date) {
+function createNewCommitElement(index, sub_index, commiter, message, date) {
     var commit_ele = document.createElement("div");
     commit_ele.classList.add("commit");
     commit_ele.style.marginLeft = "4vw";
@@ -373,40 +373,39 @@ function createNewCommitElement(index, commiter, message, date) {
 
     commit_ele.appendChild(commit_date);
 
-    var commit_holder = document.getElementById("commit-holder-" + index);
+    var commit_holder = document.getElementById("commit-holder-" + index + "-" + sub_index);
     commit_holder.appendChild(commit_ele);
 }
 
 // iterates through an array of commits
 // Then uses createNewCommitElement to add them to the html page
-function parseCommits(index, commits) {
+function parseCommits(index, sub_index, commits) {
 
     for (let i=0; i<commits.length; i++) {
         var commiter = commits[i].commiter;
         var message = commits[i].message;
         var date = commits[i].created_at;
 
-        createNewCommitElement(index, commiter, message, date);
+        createNewCommitElement(index, sub_index, commiter, message, date);
     }
 }
 
 // Hides or shows the commits
 // If the commits arent yet loaded it will send an XMLHtppRequest to the server to get the commits.
-function toggleCommits(index, changelog_id, previous_id) {
+function toggleCommits(index, sub_index, changelog_id, previous_id, repo_name) {
 
-
-    var commitHolder = document.getElementById("commit-holder-" + index.toString());
-    var button = document.getElementById("toggle-button-" + index.toString());
+    var commitHolder = document.getElementById("commit-holder-" + index.toString() + "-" + sub_index.toString());
+    var button = document.getElementById("toggle-button-" + index.toString() + "-" + sub_index.toString());
 
     if (commitHolder.getElementsByClassName("commit").length == 0) {
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                parseCommits(index, JSON.parse(this.response).commits);
+                parseCommits(index, sub_index, JSON.parse(this.response).commits);
             }
         };
-        xhttp.open("GET", "/commit?index=" + index + "&changelog_id=" + changelog_id + "&previous_id=" + previous_id, true);
+        xhttp.open("GET", "/commit?index=" + index + "&changelog_id=" + changelog_id + "&previous_id=" + previous_id + "&repo=" +  repo_name, true);
         xhttp.send();
     }
 
