@@ -56,7 +56,7 @@ class DocumentationController extends Controller
         }
 
         return redirect()
-            ->route('documentation.index', ["#chapter-".$documentationChapter::find($request['documentation_id'])->title]);
+            ->route('documentation.index', ["#chapter-".$documentationChapter::find($request['documentation_id'])->title, "enable_moving" => true]);
 
     }
 

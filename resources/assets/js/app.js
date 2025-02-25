@@ -71,7 +71,9 @@ if (document.getElementById('edit') !== null) {
     }
 }
 
-
+if (new URLSearchParams(window.location.search).get('enable_moving') == 1) {
+    toggleSequence();
+}
 
 // For the edit page we automatically load the subchapters with their bodies.
 // But the Quilljs editor arent setup for them yet, so we need to do it now.
