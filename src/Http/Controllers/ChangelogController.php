@@ -102,7 +102,7 @@ class ChangelogController extends Controller
                 }
                 $sorted_items->push([
                     'commit_info' => $commit_info,
-                    'changelog' => $chapter,
+                    'changelog' => null,
                     'changelog_id' => $chapter->id,
                     'previous_id' => -2
                 ]);
