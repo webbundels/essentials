@@ -47,10 +47,12 @@ class DocumentationController extends Controller
 
                 if ($documentationChapter->id == (int) $request['documentation_id']) {
                     $documentationChapter->sequence = $new_sequence; //1 -> 2
+                    $documentationChapter->timestamps = false;
                     $documentationChapter->save();
 
                 } else if ($documentationChapter->sequence == $new_sequence) { //2
                     $documentationChapter->sequence = (int) $request['current_sequence'];
+                    $documentationChapter->timestamps = false;
                     $documentationChapter->save(); // 2 -> 1
                 }
         }
