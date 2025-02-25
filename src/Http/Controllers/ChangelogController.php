@@ -19,7 +19,7 @@ class ChangelogController extends Controller
 {
     public function __construct()
     {
-        View::share('section', 'changelog');
+        View::share('section', 'Changelog');
     }
 
     // Gathers some commits info
@@ -33,6 +33,9 @@ class ChangelogController extends Controller
      */
     public function index(ViewChangelogRequest $request)
     {
+
+        //dd(explode(',', env('GITHUB_REPOS')));
+
         $changelogChapters = ChangelogChapter::get()->sortByDesc('created_at');
         $sorted_items = collect();
         $previous_chapter = null;
@@ -42,21 +45,63 @@ class ChangelogController extends Controller
 
             $previous_id = -1;
 
-            if (! $previous_chapter) {
-                $commits_count = Commit::where('created_at', '>', $chapter->created_at)->count();
-            } else {
-                $previous_id = $previous_chapter->id;
-                $commits_count =  Commit::whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at])->count();
+            $repos = explode(',', env('GITHUB_REPOSITORIES'));
+
+            $commit_info = collect();
+
+            foreach($repos as $repo) {
+
+                if (! $previous_chapter) {
+                    $commits_count = Commit::where('created_at', '>', $chapter->created_at)->where('repository', '=', $repo)->count();
+                } else {
+                    $previous_id = $previous_chapter->id;
+                    $commits_count =  Commit::whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at])->where('repository', '=', $repo)->count();
+                }
+
+                $commit_info->push([
+                    'commit_repo' => $repo,
+                    'commit_count' => $commits_count,
+                    'changelog_id' => $chapter->id,
+                    'previous_id' => $previous_id
+                ]);
+
             }
 
             $sorted_items->push([
-                'commit_count' => $commits_count,
+                'commit_info' => $commit_info,
                 'changelog' => $chapter,
                 'changelog_id' => $chapter->id,
                 'previous_id' => $previous_id
             ]);
 
             $previous_chapter = $chapter;
+
+            if ($index == count($changelogChapters) - 1) {
+                $repos = explode(',', env('GITHUB_REPOSITORIES'));
+
+                $commit_info = collect();
+
+                foreach($repos as $repo) {
+
+                    $commits_count = Commit::where('created_at', '<', $chapter->created_at)->where('repository', '=', $repo)->count();
+                    
+
+                    $commit_info->push([
+                        'commit_repo' => $repo,
+                        'commit_count' => $commits_count,
+                        'changelog_id' => $chapter->id,
+                        'previous_id' => -2
+                    ]);
+
+                }
+                $sorted_items->push([
+                    'commit_info' => $commit_info,
+                    'changelog' => $chapter,
+                    'changelog_id' => $chapter->id,
+                    'previous_id' => -2
+                ]);
+
+            }
         }
 
 

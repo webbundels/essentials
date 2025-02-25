@@ -30,22 +30,27 @@
         <div data-changelog-container class="changelog-container">
             @foreach ($sorted_items as $index => $item)
 
-                <h6> Commits: {{ $item['commit_count']}} </h1>
+                @foreach($item['commit_info'] as $sub_index => $commit_info)
 
-                <a id="toggle-button-{{$index}}" onclick="toggleCommits({{$index}}, {{$item['changelog_id']}}, {{$item['previous_id']}} )"> show </a>
-                <div id="commit-holder-{{$index}}" style="display: none;">
-                {{-- @foreach($item['commits'] as $commit)
-                    <div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
+                    <h6> Commits: {{ $commit_info['commit_count']}} </h6>
 
-                        <h4 class="edit-title">{{ $commit->commiter }} </h2>
-                        <h6 class="version-title"> versie: {{ $commit->message }} </h4>
+                        <h4> repo: {{ $commit_info['commit_repo'] }} </h4>
 
-                        <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
-                        <hr>
+                    <a id="toggle-button-{{$index}}-{{$sub_index}}" onclick="toggleCommits({{$index}}, {{$sub_index}}, {{$commit_info['changelog_id']}}, {{$commit_info['previous_id']}},   '{{ $commit_info['commit_repo'] }}' )"> show </a>
+                    <div id="commit-holder-{{$index}}-{{$sub_index}}" style="display: none;">
+                    {{-- @foreach($item['commits'] as $commit)
+                        <div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
+
+                            <h4 class="edit-title">{{ $commit->commiter }} </h2>
+                            <h6 class="version-title"> versie: {{ $commit->message }} </h4>
+
+                            <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
+                            <hr>
+                        </div>
+                    @endforeach --}}
                     </div>
-                @endforeach --}}
-                </div>
 
+                @endforeach
 
 
                 @if($item['changelog'] != null)
