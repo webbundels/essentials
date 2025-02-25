@@ -5,7 +5,13 @@
 
     #subchapter_list{
 
-        .subchapter-holder{
+        .subchapter_holder{
+
+            .delete-subchapter-button{
+                text-align: center;
+                background-color: #ffcccc;
+                margin: 10px 0;
+            }
 
         }
     }

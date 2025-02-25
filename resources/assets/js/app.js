@@ -131,7 +131,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
         modules: {
             toolbar: toolbarOptions,
         },
-        placeholder: 'Inhoud...',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -153,7 +152,6 @@ function createNewSubchapterElement() {
     subchapterHolder.id = "subchapter_temp_" + subchapter_temp_id;
     subchapter_temp_id++;
 
-
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
@@ -162,14 +160,13 @@ function createNewSubchapterElement() {
 
     subTitle.required = true;
 
-
     var labelTitle = document.createElement('label');
     labelTitle.for = "sub_title[]";
+    labelTitle.classList.add('styled-label');
 
     var labelSpan = document.createElement("span");
     labelSpan.innerHTML = "Titel";
     labelTitle.appendChild(labelSpan);
-
 
     labelTitle.appendChild(subTitle);
     subchapterHolder.append(labelTitle);
@@ -179,7 +176,6 @@ function createNewSubchapterElement() {
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
 
-
     labelTitle = document.createElement('label');
     labelTitle.for = "sub_body[]";
 
@@ -187,10 +183,8 @@ function createNewSubchapterElement() {
     labelSpan.innerHTML = "Inhoud";
     labelTitle.appendChild(labelSpan);
 
-
     labelTitle.appendChild(subchapterEditor);
     subchapterHolder.append(labelTitle);
-
 
     subchapterEditor.required = true;
 
@@ -206,8 +200,6 @@ function createNewSubchapterElement() {
 
     subchapterHolder.appendChild(subchapterEditorHolder);
 
-    //<div class="styled-button" type="button" onclick="removeSubchapter()"> Verwijderen </div>
-
     var deleteButton = document.createElement("div");
     deleteButton.classList.add("styled-button");
     deleteButton.classList.add("delete-subchapter-button");
@@ -215,7 +207,6 @@ function createNewSubchapterElement() {
     deleteButton.innerHTML = "Verwijderen";
     deleteButton.onclick = function() {
         if (confirm("Weet je zeker dat je dit subhoofdstuk wil verwijderen?") == true) {
-
 
             subchapterHolder.style.display = "none";
             idInput.value = "-2";

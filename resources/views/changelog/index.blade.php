@@ -44,10 +44,8 @@
                     <div id="commit-holder-{{$index}}-{{$sub_index}}" class="commits" style="display: none;"></div>
                 @endforeach
 
-
                 @if($item['changelog'] != null)
                     <div class="changelog-chapter">
-                        {{-- <h2 class="edit-title">{{ $item['changelog']->title }} </h2> --}}
                         <h4 class="version-title"> versie: {{ $item['changelog']->version }} </h4>
 
                         <h3 class="date-title">{{ $item['changelog']->created_at->format('d-m-Y h:i') }} </h3>
@@ -58,7 +56,6 @@
                         <a href="{{ route('changelog.edit', ['id' => $item['changelog']->id]) }}" class="title-button">Wijzigen</a>
                     </div>
                 @else
-                    <hr>
                 @endif
 
             @endforeach
