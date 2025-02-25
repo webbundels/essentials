@@ -44,7 +44,6 @@
             @endforeach
         </div>
 
-
         <div class="side-content-table-holder">
             <div class="side-content-table">
                 @foreach ($documentationChapters as $documentationChapter)
@@ -61,8 +60,6 @@
                 @endforeach
             </div>
         </div>
-
-
 
         <div data-documentation-container class="documentation-container">
             @foreach ($documentationChapters->sortBy('sequence') as $documentationChapter)

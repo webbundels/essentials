@@ -17,11 +17,11 @@ class EssentialsServiceProvider extends ServiceProvider
     //
   }
   public static function getGithubRepo(): string {
-    return env("GTIHUB_REPOSITORY");
+    return env("GITHUB_REPOSITORY");
   }
 
   public static function getGithubURL(): string {
-    return 'https://api.github.com/repos/'.env('GTIHUB_REPOSITORY');
+    return 'https://api.github.com/repos/'.env('GITHUB_REPOSITORY');
   }
 
   // Checks the date with github and our date,
