@@ -31,30 +31,18 @@
             @foreach ($sorted_items as $index => $item)
 
                 @foreach($item['commit_info'] as $sub_index => $commit_info)
-
-                <div class="changelog-commit-holder" onclick="toggleCommits({{$index}}, {{$sub_index}}, {{$commit_info['changelog_id']}}, {{$commit_info['previous_id']}}, '{{ $commit_info['commit_repo'] }}' )">
-                    <div class="changelog-commit-repo-name">
-                        {{ $commit_info['commit_repo'] }}
-                    </div>
-                    <div class="changelog-commit-count">
-                        {{ $commit_info['commit_count']}} commits
-                    </div>
-                </div>
-
-                <div id="commit-holder-{{$index}}-{{$sub_index}}" style="display: none;">
-                    {{-- @foreach($item['commits'] as $commit)
-                        <div class="commit" style="margin-left: 4vw; font-style: italic; display: inherit;">
-
-                            <h4 class="edit-title">{{ $commit->commiter }} </h2>
-                            <h6 class="version-title"> versie: {{ $commit->message }} </h4>
-
-                            <h5 class="date-title"> Gemaakt op: {{ $commit->created_at->format('d-m-Y h:i') }} </h3>
-                            <hr>
+                    <div class="changelog-commit-holder" onclick="toggleCommits({{$index}}, {{$sub_index}}, {{$commit_info['changelog_id']}}, {{$commit_info['previous_id']}}, '{{ $commit_info['commit_repo'] }}' )">
+                        <div class="changelog-commit-repo-name">
+                            {{ $commit_info['commit_repo'] }}
                         </div>
-                    @endforeach --}}
-                </div>
-
-            @endforeach
+                        <div class="changelog-commit-count">
+                            <a href={{ $commit_info['url'] }}>
+                                {{ $commit_info['commit_count']}} commits
+                            </a>
+                        </div>
+                    </div>
+                    <div id="commit-holder-{{$index}}-{{$sub_index}}" class="commits" style="display: none;"></div>
+                @endforeach
 
 
                 @if($item['changelog'] != null)

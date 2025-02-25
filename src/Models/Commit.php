@@ -12,6 +12,7 @@ class Commit extends Model
     protected $fillable = [
         'commiter',
         'message',
-        'repository'
+        'repository',
+        'url'
     ];
 }

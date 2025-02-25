@@ -346,32 +346,40 @@ function loadDocumentationPage() {
     console.log("Loaded Documentation");
 }
 
+function join(date, options, separator) {
+    function format(option) {
+       let formatter = new Intl.DateTimeFormat('en', option);
+       return formatter.format(date);
+    }
+    return options.map(format).join(separator);
+ }
+
+ var options = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}];
 // Creates a new commit element
 // Then adds it to the commit-holder on the html page
-function createNewCommitElement(index, sub_index, commiter, message, date) {
+function createNewCommitElement(index, sub_index, commiter, message, date, commit_url) {
     var commit_ele = document.createElement("div");
     commit_ele.classList.add("commit");
-    commit_ele.style.marginLeft = "4vw";
-    commit_ele.style.fontStyle = "italic";
     commit_ele.style.display = "inherit";
 
-    var title = document.createElement("h4");
+    var commit_date = document.createElement("a");
+    commit_date.classList.add("commit-date");
+    commit_date.href = commit_url;
+    commit_date.innerHTML =  join(new Date(date), options, '-');
+
+    commit_ele.appendChild(commit_date);
+
+    var title = document.createElement("div");
     title.classList.add("commit-title");
     title.innerHTML = commiter;
 
     commit_ele.appendChild(title);
 
-    var commit_message = document.createElement("h6");
+    var commit_message = document.createElement("div");
     commit_message.classList.add("commit-message");
     commit_message.innerHTML = message;
 
     commit_ele.appendChild(commit_message);
-
-    var commit_date = document.createElement("h5");
-    commit_date.classList.add("date-title");
-    commit_date.innerHTML = "Gemaakt op: " + date;
-
-    commit_ele.appendChild(commit_date);
 
     var commit_holder = document.getElementById("commit-holder-" + index + "-" + sub_index);
     commit_holder.appendChild(commit_ele);
@@ -385,8 +393,9 @@ function parseCommits(index, sub_index, commits) {
         var commiter = commits[i].commiter;
         var message = commits[i].message;
         var date = commits[i].created_at;
+        var url = commits[i].url;
 
-        createNewCommitElement(index, sub_index, commiter, message, date);
+        createNewCommitElement(index, sub_index, commiter, message, date, url);
     }
 }
 

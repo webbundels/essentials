@@ -28,12 +28,44 @@
         }
     }
 
+    /* COMMITS LIST */
+    .commits{
+        border-radius: 10px;
+
+        .commit{
+            padding: 20px;
+            transition: all 0.2s ease-in;
+
+            &:not(:last-child){
+                border-bottom: 1px solid #ccc;
+            }
+
+            .commit-date{
+                display: inline-block;
+            }
+            .commit-title{
+                display: inline-block;
+                margin-left: 15px;
+                font-weight: 600;
+            }
+            .commit-message{
+                margin-top: 10px;
+            }
+
+            &:hover{
+                background-color: #f7f7f7;
+                transition: all 0.1s ease-out;
+            }
+        }
+    }
+
     /* CHAPTER */
     .changelog-chapter {
         position: relative;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 40px;
-        margin-bottom: 40px;
+        padding: 15px 20px;
+        margin: 20px 0;
+        background-color: #f7f7f7;
+        border-radius: 10px;
 
         &:hover .title-button {
             opacity: 1;

@@ -40,6 +40,7 @@ class EssentialsServiceProvider extends ServiceProvider
               $new_commit->message = $raw_commit->commit->message;
               $new_commit->created_at = $raw_commit->commit->author->date;
               $new_commit->repository = $repository;
+              $new_commit->url = $raw_commit->html_url;
 
               $new_commit->save();
       }
@@ -79,13 +80,16 @@ class EssentialsServiceProvider extends ServiceProvider
 
       $raw_commits = json_decode($commit_request->getBody());
 
+
       // Then we iterate through the json and create new commits.
       foreach ($raw_commits as $raw_commit) {
+
               $new_commit = new Commit();
               $new_commit->commiter = $raw_commit->commit->author->name;
               $new_commit->message = $raw_commit->commit->message;
               $new_commit->created_at = $raw_commit->commit->author->date;
               $new_commit->repository = $repository;
+              $new_commit->url = $raw_commit->html_url;
 
               $new_commit->save();
       }
