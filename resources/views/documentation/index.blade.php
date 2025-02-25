@@ -45,14 +45,21 @@
         </div>
 
 
-        <div class="side-content-table">
-            @foreach ($documentationChapters as $documentationChapter)
-                <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">{{ $documentationChapter->title }}</a>
-
-                @foreach ($documentationChapter->subchapters as $subchapter)
-                    <a class="subchapter" href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}"> {{ $subchapter->title }} </a>
+        <div class="side-content-table-holder">
+            <div class="side-content-table">
+                @foreach ($documentationChapters as $documentationChapter)
+                    <div class="side-content-table-subject">
+                        <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
+                            {{ $documentationChapter->title }}
+                        </a>
+                    </div>
+                    @foreach ($documentationChapter->subchapters as $subchapter)
+                        <div class="side-content-table-subject sub">
+                            <a class="subchapter" href="#subchapter-{{ Str::of($subchapter->title)->slug('-') }}"> {{ $subchapter->title }} </a>
+                        </div>
+                    @endforeach
                 @endforeach
-            @endforeach
+            </div>
         </div>
 
 
