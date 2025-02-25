@@ -71,7 +71,9 @@ if (document.getElementById('edit') !== null) {
     }
 }
 
-
+if (new URLSearchParams(window.location.search).get('enable_moving') == 1) {
+    toggleSequence();
+}
 
 // For the edit page we automatically load the subchapters with their bodies.
 // But the Quilljs editor arent setup for them yet, so we need to do it now.
@@ -101,14 +103,13 @@ function submitForm() {
 function toggleSequence() {
     var form = document.getElementById("change-sequence");
 
-    if (form.innerHTML == "Verander Volgorde") {
-        var forms = document.getElementsByClassName("move-form");
-        
+    if (form.innerHTML == "Wijzig Volgorde") {
+        var forms = document.getElementsByClassName("move-form")
         for (let i=0; i<forms.length; i++) {
             forms[i].style.display = "inherit";
         }
 
-        document.getElementById("change-sequence").style.display = "none";
+        document.getElementById("change-sequence").innerHTML = "Klaar";
     } else {
 
 
@@ -117,7 +118,7 @@ function toggleSequence() {
             forms[i].style.display = "none";
         }
 
-        document.getElementById("change-sequence").innerHTML = "Verander Volgorde";
+        document.getElementById("change-sequence").innerHTML = "Wijzig Volgorde";
 
     }
 }
@@ -140,10 +141,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
     });
 
     newEditor.enable(true);
-}
-
-function deleteSubchapter(id) {
-    console.log("HELLO");
 }
 
 var subchapter_temp_id = 1;
@@ -217,10 +214,14 @@ function createNewSubchapterElement() {
     deleteButton.type = "button";
     deleteButton.innerHTML = "Verwijderen";
     deleteButton.onclick = function() {
-        subchapterHolder.style.display = "none";
-        idInput.value = "-2";
-        subTitle.required = false;
-        subchapterEditor.required = false;
+        if (confirm("Weet je zeker dat je dit subhoofdstuk wil verwijderen?") == true) {
+
+
+            subchapterHolder.style.display = "none";
+            idInput.value = "-2";
+            subTitle.required = false;
+            subchapterEditor.required = false;
+        }
     };
 
     subchapterHolder.appendChild(deleteButton);
