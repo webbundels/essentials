@@ -8,8 +8,12 @@
 
     @if (Auth::user()->documentation_editable)
         <div class="button-holder">
-            <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}"> Nieuw hoofdstuk </a>
-            <a id="change-sequence" class="styled-button" onclick="toggleSequence()"> Verander Volgorde </a>
+            <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}">
+                Nieuw hoofdstuk
+            </a>
+            <a id="change-sequence" class="styled-button" onclick="toggleSequence()">
+                Verander volgorde
+            </a>
         </div>
     @endif
 
@@ -41,7 +45,7 @@
         </div>
 
 
-        <div class="side-content-table" id="table_of_contents">
+        <div class="side-content-table">
             @foreach ($documentationChapters as $documentationChapter)
                 <a href="#chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">{{ $documentationChapter->title }}</a>
 
@@ -73,7 +77,7 @@
                                 {{-- This form is for moving subchapters up and down --}}
                                 <form  method="post" class="move-form" style="display: none" id="move_form", action="{{ route('subchapter.change_order', ['id' => $subchapter->id ]) }}">
                                     @csrf
-                                        @if ($loop->count > 1) 
+                                        @if ($loop->count > 1)
                                             @if ($loop->first)
                                                 <button name="new_move" type="submit" value="1"> Down </button>
                                             @elseif ($loop->last)
