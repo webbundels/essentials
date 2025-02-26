@@ -50,7 +50,7 @@
 
                         <h3 class="date-title">{{ $item['changelog']->created_at->format('d-m-Y') }} </h3>
 
-                        <div class="changelog-body">
+                        <div class="changelog-body ql-editor" style="white-space: normal">
                             {!! $item['changelog']->body !!}
                         </div>
                         <a href="{{ route('changelog.edit', ['id' => $item['changelog']->id]) }}" class="title-button">Wijzigen</a>

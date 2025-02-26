@@ -85,7 +85,7 @@
                                         <input type="hidden" name="current_sequence" value={{ $documentationChapter->sequence }}>
                                 </form>
                                 @endif
-                    <div class="ql-container ql-bubble">
+                    <div class="ql-editor ql-bubble"  style="white-space: normal">
                     {!! $documentationChapter->body !!}
                     </div>
 
@@ -115,9 +115,10 @@
                                         <input type="hidden" name="current_sequence" value={{ $subchapter->sequence }}>
                                 </form>
                                 @endif
-                            <h2> {{ $subchapter->title }} </h2>
-
+                            <h2 class> {{ $subchapter->title }} </h2>
+                            <div class="ql-editor"  style="white-space: normal">
                             {!! $subchapter->body !!}
+                            </div>
                         </div>
                     @endforeach
                 </div>

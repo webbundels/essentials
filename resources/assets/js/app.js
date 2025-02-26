@@ -51,6 +51,7 @@ if (document.getElementById('edit') !== null) {
     const bodyInput = document.getElementById('body_input');
 
     editor.on('text-change', function(delta, oldDelta, source){
+        editorEle.querySelector('.ql-editor').innerHTML.replace('ol')
         bodyInput.value = editorEle.querySelector('.ql-editor').innerHTML;
     });
 
