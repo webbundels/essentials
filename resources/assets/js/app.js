@@ -344,7 +344,7 @@ function formatDate(date) {
     if (day <= 9) {
         out_string += "0";
     }
-    out_string += date;
+    out_string += day;
     out_string += "-";
 
     var month = date.getUTCMonth();
