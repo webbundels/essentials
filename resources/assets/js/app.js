@@ -339,7 +339,7 @@ function loadDocumentationPage() {
 function formatDate(date) {
 
     var date = date.getUTCDate();
-    
+    var out_string = "";
 
     if (date <= 9) {
         out_string += "0";
