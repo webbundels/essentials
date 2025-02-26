@@ -68,7 +68,7 @@
 
 
         <div class="styled-button" type="button" onclick="addSubChapter()" style="text-align:center">
-            Nieuw subhoofdstuk
+            Nieuwe Subhoofdstuk
         </div>
     </div>
 @stop

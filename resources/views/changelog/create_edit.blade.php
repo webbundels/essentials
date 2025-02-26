@@ -13,16 +13,15 @@
 
         <form method="post" id="form" class="changelogForm" action="{{ $changelogChapter->id ? route('changelog.update', ['id' => $changelogChapter->id]) : route('changelog.store') }}">
             @csrf
-                <input style="display: none;" type="text" name="title" placeholder="Titel" id="title_input" value="empty">
             
             <label class="styled-label" for="version">
                 <span>Versie</span>
-                <input type="text" name="version" id="version_input" placeholder="versie" value="{{ old('body', $changelogChapter->version) }}">
+                <input type="text" name="version" id="version_input" placeholder="versie" value="{{ old('body', $changelogChapter->version) }}" required>
             </label>
 
-            <label class="styled-label" for="created_at">
+            <label class="styled-label" for="release_date">
                 <span>Datum </span>
-                <input type="datetime-local" name="created_at" id="date_input" value="{{ $changelogChapter->created_at != null ? old('created_at', $changelogChapter->created_at->format('Y-m-d')) : '' }}">
+                <input type="datetime-local" name="release_date" id="date_input" value="{{ $changelogChapter->release_date != null ? old('release_date', $changelogChapter->release_date->format('Y-m-d H:i')) : '' }}" required>
             </label>
 
             <label class="styled-label" for="body">

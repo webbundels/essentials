@@ -9,5 +9,7 @@ class ChangelogChapter extends Model
 {
     public $timestamps = true;
 
-    protected $fillable = ['title', 'body', 'version'];
+    protected $fillable = ['body', 'version', 'release_date'];
+
+    protected $casts = ['release_date' => 'datetime'];
 }

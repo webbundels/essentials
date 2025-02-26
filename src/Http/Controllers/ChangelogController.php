@@ -36,7 +36,7 @@ class ChangelogController extends Controller
 
         //dd(explode(',', env('GITHUB_REPOS')));
 
-        $changelogChapters = ChangelogChapter::get()->sortByDesc('created_at');
+        $changelogChapters = ChangelogChapter::get()->sortByDesc('release_date');
         $sorted_items = collect();
         $previous_chapter = null;
 
@@ -58,8 +58,8 @@ class ChangelogController extends Controller
                     $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->created_at->format('Y-m-d');
                 } else {
                     $previous_id = $previous_chapter->id;
-                    $commits_count =  Commit::whereBetween('created_at', [$chapter->created_at, $previous_chapter->created_at])->where('repository', '=', $repo)->count();
-                    $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->created_at->format('Y-m-d').'&until='.$previous_chapter->created_at->format('Y-m-d');
+                    $commits_count =  Commit::whereBetween('created_at', [$chapter->release_date, $previous_chapter->release_date])->where('repository', '=', $repo)->count();
+                    $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->release_date->format('Y-m-d').'&until='.$previous_chapter->release_date->format('Y-m-d');
                 }
 
                 $commit_info->push([
@@ -88,7 +88,7 @@ class ChangelogController extends Controller
 
                 foreach($repos as $repo) {
 
-                    $commits_count = Commit::where('created_at', '<', $chapter->created_at)->where('repository', '=', $repo)->count();
+                    $commits_count = Commit::where('created_at', '<', $chapter->release_date)->where('repository', '=', $repo)->count();
                     
 
                     $commit_info->push([
@@ -96,7 +96,7 @@ class ChangelogController extends Controller
                         'commit_count' => $commits_count,
                         'changelog_id' => $chapter->id,
                         'previous_id' => -2,
-                        'url' => "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?until='.$previous_chapter->created_at->format('Y-m-d')
+                        'url' => "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?until='.$previous_chapter->release_date->format('Y-m-d')
                     ]);
 
                 }
@@ -117,20 +117,15 @@ class ChangelogController extends Controller
 
     public function create(CreateChangelogRequest $request)
     {
-        $titles = ChangelogChapter::pluck('title');
         $changelogChapter = new ChangelogChapter;
 
-        return view('EssentialsPackage::changelog.create_edit', compact('changelogChapter', 'titles'));
+        return view('EssentialsPackage::changelog.create_edit', compact('changelogChapter'));
     }
 
-    // Note the created_at is filled in manually.
     public function store(StoreChangelogRequest $request)
     {
         $changelogChapter = new ChangelogChapter();
         $changelogChapter->fill($request->all());
-        $changelogChapter->save();
-
-        $changelogChapter->created_at = $request->all()['created_at'];
         $changelogChapter->save();
 
         return redirect()
@@ -140,18 +135,14 @@ class ChangelogController extends Controller
     public function edit(EditChangelogRequest $request, $id)
     {
         $changelogChapter = ChangelogChapter::find($id);
-        $titles = ChangelogChapter::pluck('title');
 
-        return view('EssentialsPackage::changelog.create_edit', compact('changelogChapter', 'titles'));
+        return view('EssentialsPackage::changelog.create_edit', compact('changelogChapter'));
     }
 
     public function update(UpdateChangelogRequest $request, $id)
     {
         $changelogChapter = ChangelogChapter::find($id);
         $changelogChapter->update(Arr::except($request->all(), ['_token']));
-
-        $changelogChapter->created_at = $request->all()['created_at'];
-        $changelogChapter->save();
 
         return redirect()
             ->route('changelog.index');

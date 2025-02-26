@@ -15,9 +15,9 @@ class CreateChangelogChaptersTable extends Migration
     {
         Schema::create('changelog_chapters', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->text('body');
             $table->string('version');
+            $table->timestamp('release_date');
             $table->timestamps();
         });
     }
