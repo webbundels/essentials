@@ -125,12 +125,47 @@
             transition: all 0.2s ease-out;
         }
 
-        select {
-            position: absolute;
-            left: -70px;
-            top: 12px;
-            width: 64px;
+        .documentation-body-holder{
+            line-height: 170%;
+
+            select {
+                position: absolute;
+                left: -70px;
+                top: 12px;
+                width: 64px;
+            }
+
+            p, span, h1, h2, h3, h4{
+                padding: 0;
+                margin-bottom: 20px;
+            }
+
+            ul{
+                margin-bottom: 20px;
+                list-style: disc;
+                li{
+
+                    margin-bottom: 10px;
+                }
+            }
+
+            ol{
+                margin-bottom: 20px;
+                list-style: decimal;
+
+                li{
+                    margin-bottom: 10px;
+                }
+            }
+
+            p{
+            }
+
+            span{
+                display: inline;
+            }
         }
+
 
         h2.edit-title {
             font-size: 2.2rem;
@@ -201,6 +236,10 @@
                 background-color: #c7d0ee;
                 transition: all 0.2s ease-out;
             }
+        }
+
+        .subchapter_display{
+            position: relative;
         }
     }
 }

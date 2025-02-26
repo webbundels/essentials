@@ -104,7 +104,7 @@ function submitForm() {
 function toggleSequence() {
     var form = document.getElementById("change-sequence");
 
-    if (form.innerHTML == "Wijzig Volgorde") {
+    if (form.innerHTML == "Volgorde wijzigen") {
         var forms = document.getElementsByClassName("move-form")
         for (let i=0; i<forms.length; i++) {
             forms[i].style.display = "inherit";
@@ -119,7 +119,7 @@ function toggleSequence() {
             forms[i].style.display = "none";
         }
 
-        document.getElementById("change-sequence").innerHTML = "Wijzig Volgorde";
+        document.getElementById("change-sequence").innerHTML = "Volgorde wijzigen";
 
     }
 }
@@ -372,7 +372,7 @@ function formatDate(date) {
         out_string += "0";
     }
     out_string += min;
-    
+
     return out_string;
 }
 
