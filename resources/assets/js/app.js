@@ -338,10 +338,10 @@ function loadDocumentationPage() {
 }
 function formatDate(date) {
 
-    var date = date.getUTCDate();
+    var day = date.getUTCDate();
     var out_string = "";
 
-    if (date <= 9) {
+    if (day <= 9) {
         out_string += "0";
     }
     out_string += date;
