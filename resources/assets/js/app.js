@@ -353,12 +353,6 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     commit_ele.classList.add("commit");
     commit_ele.style.display = "inherit";
 
-    var commit_date = document.createElement("a");
-    commit_date.classList.add("commit-date");
-    commit_date.href = commit_url;
-    commit_date.innerHTML =  join(new Date(date), options, '-');
-
-    commit_ele.appendChild(commit_date);
 
     var title = document.createElement("div");
     title.classList.add("commit-title");
@@ -375,7 +369,8 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     var commit_date = document.createElement("a");
     commit_date.classList.add("date-title");
     commit_date.href = commit_url;
-    commit_date.innerHTML =  join(new Date(date), options, '-');
+    commit_date.target = '_blank';
+    commit_date.innerHTML =  new Date(date).toLocaleString();
 
     commit_ele.appendChild(commit_date);
 

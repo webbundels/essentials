@@ -36,7 +36,7 @@
                             {{ $commit_info['commit_repo'] }}
                         </div>
                         <div class="changelog-commit-count">
-                            <a href={{ $commit_info['url'] }}>
+                            <a target='_blank' href={{ $commit_info['url'] }}>
                                 {{ $commit_info['commit_count']}} commits
                             </a>
                         </div>
