@@ -338,22 +338,27 @@ function loadDocumentationPage() {
 }
 function formatDate(date) {
 
-    var out_string = "0"
-    out_string += date.getDay();
+    var day = date.getUTCDate();
+    var out_string = "";
+
+    if (day <= 9) {
+        out_string += "0";
+    }
+    out_string += day;
     out_string += "-";
 
-    var month = date.getMonth();
+    var month = date.getUTCMonth();
 
     if (month <= 9) {
         out_string += "0";
     }
 
-    out_string += month;
+    out_string += month + 1;
     out_string += "-";
-    out_string += date.getFullYear();
+    out_string += date.getUTCFullYear();
 
     out_string += " ";
-    let hour = date.getHours();
+    let hour = date.getUTCHours();
     if (hour <= 9) {
         out_string += "0";
     }
@@ -361,7 +366,7 @@ function formatDate(date) {
     out_string += ":";
 
 
-    let min = date.getMinutes();
+    let min = date.getUTCMinutes();
     if (min <= 9) {
         out_string += "0";
     }
@@ -397,7 +402,6 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     commit_date.href = commit_url;
     commit_date.target = '_blank';
     commit_date.innerHTML = formatDate(new Date(date));
-
 
     commit_ele.appendChild(commit_date);
 
