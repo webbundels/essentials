@@ -54,7 +54,7 @@ class ChangelogController extends Controller
                 $url = "https://github.com/".env("GITHUB_OWNER")."/";
 
                 if (! $previous_chapter) {
-                    $commits_count = Commit::where('created_at', '>', $chapter->created_at)->where('repository', '=', $repo)->count();
+                    $commits_count = Commit::where('created_at', '>', $chapter->release_date)->where('repository', '=', $repo)->count();
                     $url = "https://github.com/".env("GITHUB_OWNER")."/".$repo.'/commits/?since='.$chapter->created_at->format('Y-m-d');
                 } else {
                     $previous_id = $previous_chapter->id;
