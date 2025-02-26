@@ -339,7 +339,7 @@ function loadDocumentationPage() {
 function formatDate(date) {
 
     var out_string = "0"
-    out_string += date.getUTCDay();
+    out_string += date.getUTCDate();
     out_string += "-";
 
     var month = date.getUTCMonth();
