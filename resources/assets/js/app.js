@@ -4,16 +4,16 @@ const customRegistry = new Parchment.Registry();
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['link'],
-  
+
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
     [{ 'size': ['small', false, 'large', 'huge'] }],
-  
+
     [{ 'color': [] }],
-  
+
     ['clean']                                         // remove formatting button
   ];
-  
+
 
 const SAVE_DELAY_MS = 30 * 1000;
 
@@ -28,7 +28,7 @@ if (document.getElementById("form") != null) {
 
     if (localStorage.getItem("title_input") == "") {
         document.getElementById("recover_session_button").style.display = "none";
-    
+
     }
 
 }
@@ -96,7 +96,7 @@ for (let i=0; i < existingSubchapters.length; i++) {
 
 function submitForm() {
     localStorage.clear();
-    
+
 
 }
 
@@ -131,7 +131,6 @@ function createQuillEditor(editorElement, editorInput, toolbarElement) {
         modules: {
             toolbar: toolbarOptions,
         },
-        placeholder: 'Inhoud...',
         theme: 'bubble',
         scrollingContainer: document.documentElement
     });
@@ -153,7 +152,6 @@ function createNewSubchapterElement() {
     subchapterHolder.id = "subchapter_temp_" + subchapter_temp_id;
     subchapter_temp_id++;
 
-    
     var subTitle = document.createElement('input');
     subTitle.type = 'text';
     subTitle.name = 'sub_title[]';
@@ -162,14 +160,13 @@ function createNewSubchapterElement() {
 
     subTitle.required = true;
 
-
     var labelTitle = document.createElement('label');
     labelTitle.for = "sub_title[]";
-    
+    labelTitle.classList.add('styled-label');
+
     var labelSpan = document.createElement("span");
     labelSpan.innerHTML = "Titel";
     labelTitle.appendChild(labelSpan);
-
 
     labelTitle.appendChild(subTitle);
     subchapterHolder.append(labelTitle);
@@ -179,18 +176,15 @@ function createNewSubchapterElement() {
     subchapterEditor.type = 'hidden';
     subchapterEditor.name = 'sub_body[]';
 
-
     labelTitle = document.createElement('label');
     labelTitle.for = "sub_body[]";
-    
+
     labelSpan = document.createElement("span");
     labelSpan.innerHTML = "Inhoud";
     labelTitle.appendChild(labelSpan);
 
-
     labelTitle.appendChild(subchapterEditor);
     subchapterHolder.append(labelTitle);
-
 
     subchapterEditor.required = true;
 
@@ -206,8 +200,6 @@ function createNewSubchapterElement() {
 
     subchapterHolder.appendChild(subchapterEditorHolder);
 
-    //<div class="styled-button" type="button" onclick="removeSubchapter()"> Verwijderen </div>
-
     var deleteButton = document.createElement("div");
     deleteButton.classList.add("styled-button");
     deleteButton.classList.add("delete-subchapter-button");
@@ -215,7 +207,6 @@ function createNewSubchapterElement() {
     deleteButton.innerHTML = "Verwijderen";
     deleteButton.onclick = function() {
         if (confirm("Weet je zeker dat je dit subhoofdstuk wil verwijderen?") == true) {
-
 
             subchapterHolder.style.display = "none";
             idInput.value = "-2";
@@ -353,24 +344,29 @@ function join(date, options, separator) {
     }
     return options.map(format).join(separator);
  }
- 
+
  var options = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}, {hour: '2-digit'}, {minute: '2-digit'}];
 // Creates a new commit element
 // Then adds it to the commit-holder on the html page
 function createNewCommitElement(index, sub_index, commiter, message, date, commit_url) {
     var commit_ele = document.createElement("div");
     commit_ele.classList.add("commit");
-    commit_ele.style.marginLeft = "4vw";
-    commit_ele.style.fontStyle = "italic";
     commit_ele.style.display = "inherit";
 
-    var title = document.createElement("h4");
+    var commit_date = document.createElement("a");
+    commit_date.classList.add("commit-date");
+    commit_date.href = commit_url;
+    commit_date.innerHTML =  join(new Date(date), options, '-');
+
+    commit_ele.appendChild(commit_date);
+
+    var title = document.createElement("div");
     title.classList.add("commit-title");
     title.innerHTML = commiter;
 
     commit_ele.appendChild(title);
 
-    var commit_message = document.createElement("h6");
+    var commit_message = document.createElement("div");
     commit_message.classList.add("commit-message");
     commit_message.innerHTML = message;
 
@@ -379,8 +375,7 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     var commit_date = document.createElement("a");
     commit_date.classList.add("date-title");
     commit_date.href = commit_url;
-    commit_date.target = '_blank'
-    commit_date.innerHTML = new Date(date).toLocaleString(); //join(new Date(date), options, '-');
+    commit_date.innerHTML =  join(new Date(date), options, '-');
 
     commit_ele.appendChild(commit_date);
 
@@ -405,7 +400,6 @@ function parseCommits(index, sub_index, commits) {
 // Hides or shows the commits
 // If the commits arent yet loaded it will send an XMLHtppRequest to the server to get the commits.
 function toggleCommits(index, sub_index, changelog_id, previous_id, repo_name) {
-
 
     var commitHolder = document.getElementById("commit-holder-" + index.toString() + "-" + sub_index.toString());
     var button = document.getElementById("toggle-button-" + index.toString() + "-" + sub_index.toString());

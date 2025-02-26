@@ -72,7 +72,7 @@ class EssentialsServiceProvider extends ServiceProvider
     // If for some reason we dont have a cache AND dont have any commits we use the date 2020/1/1 as fallback
     if (Commit::where('repository', '=', $repository)->count() > 0) {
       $cached_data = Commit::where('repository', '=', $repository)->orderByDesc('created_at')->first()->created_at;
-    } 
+    }
 
     if ($date > $cached_data || $cached_data == null || Commit::count() == 0) {
       // Send a get request to the github api to get the commits between our dates.
@@ -116,7 +116,7 @@ class EssentialsServiceProvider extends ServiceProvider
 
           }
 
-       
+
     // } catch(Exception $e) {
     //     return redirect()->to("changelog")('errors' => ['Could not get commits']);
     // }

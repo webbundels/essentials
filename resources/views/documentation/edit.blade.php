@@ -67,8 +67,8 @@
         </form>
 
 
-        <div class="styled-button" type="button" onclick="addSubChapter()">
+        <div class="styled-button" type="button" onclick="addSubChapter()" style="text-align:center">
             Nieuwe subchapter
-</div>
+        </div>
     </div>
 @stop

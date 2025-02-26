@@ -1,10 +1,71 @@
 .changelog-container{
 
+    /* COMMITS */
+    .changelog-commit-holder{
+        display: flex;
+        flex-direction: row;
+        user-select: none;
+        justify-content: space-between;
+
+        background-color: #eee;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        transition: all 0.2s ease-in;
+
+        .changelog-commit-count{
+
+        }
+
+        .changelog-commit-repo-name{
+
+        }
+
+        &:hover{
+            background-color: #ddd;
+            transition: all 0.1s ease-out;
+        }
+    }
+
+    /* COMMITS LIST */
+    .commits{
+        border-radius: 10px;
+
+        .commit{
+            padding: 20px;
+            transition: all 0.2s ease-in;
+
+            &:not(:last-child){
+                border-bottom: 1px solid #ccc;
+            }
+
+            .commit-date{
+                display: inline-block;
+            }
+            .commit-title{
+                display: inline-block;
+                margin-left: 15px;
+                font-weight: 600;
+            }
+            .commit-message{
+                margin-top: 10px;
+            }
+
+            &:hover{
+                background-color: #f7f7f7;
+                transition: all 0.1s ease-out;
+            }
+        }
+    }
+
+    /* CHAPTER */
     .changelog-chapter {
         position: relative;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 40px;
-        margin-bottom: 40px;
+        padding: 15px 20px;
+        margin: 20px 0;
+        background-color: #f7f7f7;
+        border-radius: 10px;
 
         &:hover .title-button {
             opacity: 1;
@@ -65,22 +126,19 @@
             position: absolute;
             cursor: pointer;
             text-decoration: none;
-            right: 0;
-            top: 0;
+            right: 10px;
+            top: 10px;
             line-height: 34px;
             border: 1px solid #ccc;
             margin: 8px 0;
-            color: #999;
-            padding: 0 14px;
+            color: #333;
+            padding: 0 24px;
             font-size: 14px;
             text-align: center;
             border-radius: 18px;
-            opacity: 0;
+            opacity: .25;
             background-color: #fff;
             transition: all 0.1s ease-in;
-        }
-
-        .title-button{
 
             &:hover {
                 background-color: white;
