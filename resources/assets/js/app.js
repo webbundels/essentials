@@ -348,7 +348,7 @@ function formatDate(date) {
         out_string += "0";
     }
 
-    out_string += month;
+    out_string += month + 1;
     out_string += "-";
     out_string += date.getFullYear();
 
