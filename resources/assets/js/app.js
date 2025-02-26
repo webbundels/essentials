@@ -336,16 +336,42 @@ function loadDocumentationPage() {
 
     console.log("Loaded Documentation");
 }
+function formatDate(date) {
 
-function join(date, options, separator) {
-    function format(option) {
-       let formatter = new Intl.DateTimeFormat('hi-IN', option);
-       return formatter.format(date);
+    var out_string = "0"
+    out_string += date.getDay();
+    out_string += "-";
+
+    var month = date.getMonth();
+
+    if (month <= 9) {
+        out_string += "0";
     }
-    return options.map(format).join(separator);
- }
 
- var options = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}, {hour: '2-digit'}, {minute: '2-digit'}];
+    out_string += month;
+    out_string += "-";
+    out_string += date.getFullYear();
+
+    out_string += " ";
+    let hour = date.getHours();
+    if (hour <= 9) {
+        out_string += "0";
+    }
+    out_string += hour;
+    out_string += ":";
+
+
+    let min = date.getMinutes();
+    if (min <= 9) {
+        out_string += "0";
+    }
+    out_string += min;
+    
+    return out_string;
+}
+
+
+
 // Creates a new commit element
 // Then adds it to the commit-holder on the html page
 function createNewCommitElement(index, sub_index, commiter, message, date, commit_url) {
@@ -370,7 +396,8 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     commit_date.classList.add("date-title");
     commit_date.href = commit_url;
     commit_date.target = '_blank';
-    commit_date.innerHTML =  new Date(date).toLocaleString();
+    commit_date.innerHTML = formatDate(new Date(date));
+
 
     commit_ele.appendChild(commit_date);
 
@@ -413,9 +440,7 @@ function toggleCommits(index, sub_index, changelog_id, previous_id, repo_name) {
 
     if (commitHolder.style.display == "none") {
         commitHolder.style.display = "inherit";
-        button.innerHTML = "hide";
     } else {
         commitHolder.style.display = "none";
-        button.innerHTML = "show";
     }
 }
