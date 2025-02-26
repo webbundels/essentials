@@ -22,7 +22,7 @@
 
             <label class="styled-label" for="created_at">
                 <span>Datum </span>
-                <input type="date" name="created_at" id="date_input" value="{{ $changelogChapter->created_at != null ? old('created_at', $changelogChapter->created_at->format('Y-m-d')) : '' }}">
+                <input type="datetime-local" name="created_at" id="date_input" value="{{ $changelogChapter->created_at != null ? old('created_at', $changelogChapter->created_at->format('Y-m-d')) : '' }}">
             </label>
 
             <label class="styled-label" for="body">
