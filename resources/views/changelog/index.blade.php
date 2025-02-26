@@ -48,7 +48,7 @@
                     <div class="changelog-chapter">
                         <h4 class="version-title"> versie: {{ $item['changelog']->version }} </h4>
 
-                        <h3 class="date-title">{{ $item['changelog']->created_at->format('d-m-Y h:i') }} </h3>
+                        <h3 class="date-title">{{ $item['changelog']->created_at->format('d-m-Y') }} </h3>
 
                         <div class="changelog-body">
                             {!! $item['changelog']->body !!}
