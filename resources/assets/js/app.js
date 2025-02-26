@@ -338,8 +338,13 @@ function loadDocumentationPage() {
 }
 function formatDate(date) {
 
-    var out_string = "0"
-    out_string += date.getUTCDate();
+    var date = date.getUTCDate();
+    
+
+    if (date <= 9) {
+        out_string += "0";
+    }
+    out_string += date;
     out_string += "-";
 
     var month = date.getUTCMonth();
