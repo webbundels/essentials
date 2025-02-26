@@ -65,7 +65,7 @@
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
                     <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:i') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
-                    @if (Auth::user()->documentationEditable)
+                    @if(Auth::user()->documentationEditable)
                                 {{-- This form is for moving subchapters up and down --}}
                                 <form  method="post" class="move-form" style="display: none" id="move_form", action="{{ route('documentation.change_order') }}">
                                     @csrf
@@ -92,14 +92,10 @@
                                     <input type="hidden" name="documentation_id" value={{ $documentationChapter->id }}>
                                     <input type="hidden" name="current_sequence" value={{ $documentationChapter->sequence }}>
                                 </form>
-                                @endif
-<<<<<<< HEAD
-                    <div class="ql-editor ql-bubble"  style="white-space: normal">
+                    @endif
+
+                    <div class="ql-editor ql-bubble documentation-chapter-holder"  style="white-space: normal">
                     {!! $documentationChapter->body !!}
-=======
-                    <div class="documentation-body-holder">
-                        {!! $documentationChapter->body !!}
->>>>>>> 1c39c28310ce486565c41396c607e69c4403b7d5
                     </div>
 
                     @foreach ($documentationChapter->subchapters->sortBy('sequence') as $subchapter)
@@ -136,22 +132,9 @@
                                     <input type="hidden" name="current_sequence" value={{ $subchapter->sequence }}>
                             </form>
                             @endif
-
-<<<<<<< HEAD
-                                        <input type="hidden" name="documentation_id" value={{ $documentationChapter->id }}>
-                                        <input type="hidden" name="subchapter_id" value={{ $subchapter->id }}>
-                                        <input type="hidden" name="current_sequence" value={{ $subchapter->sequence }}>
-                                </form>
-                                @endif
                             <h2 class> {{ $subchapter->title }} </h2>
-                            <div class="ql-editor"  style="white-space: normal">
+                            <div class="ql-editor documentation-body-holder"  style="white-space: normal">
                             {!! $subchapter->body !!}
-=======
-                            <h2> {{ $subchapter->title }} </h2>
-
-                            <div class="documentation-body-holder">
-                                {!! $subchapter->body !!}
->>>>>>> 1c39c28310ce486565c41396c607e69c4403b7d5
                             </div>
                         </div>
                     @endforeach
