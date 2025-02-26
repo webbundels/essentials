@@ -68,7 +68,7 @@
             @foreach ($documentationChapters->sortBy('sequence') as $documentationChapter)
                 <div class="documentation-chapter" id="chapter-{{ Str::of($documentationChapter->title)->slug('-') }}">
                     <h2 class="edit-title">{{ $documentationChapter->title }}</h2>
-                    <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:m') }} </h3>
+                    <h3 class="last-updated" style="font-style: italic; color: gray;">{{ $documentationChapter->updated_at->format('d-m-Y H:i') }} </h3>
                     <a href="{{ route('documentation.edit', ['id' => $documentationChapter->id]) }}" class="title-button">Wijzigen</a>
                     @if (Auth::user()->documentationEditable)
                                 {{-- This form is for moving subchapters up and down --}}

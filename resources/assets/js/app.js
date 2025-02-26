@@ -348,13 +348,13 @@ function loadDocumentationPage() {
 
 function join(date, options, separator) {
     function format(option) {
-       let formatter = new Intl.DateTimeFormat('en', option);
+       let formatter = new Intl.DateTimeFormat('hi-IN', option);
        return formatter.format(date);
     }
     return options.map(format).join(separator);
  }
  
- var options = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}];
+ var options = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}, {hour: '2-digit'}, {minute: '2-digit'}];
 // Creates a new commit element
 // Then adds it to the commit-holder on the html page
 function createNewCommitElement(index, sub_index, commiter, message, date, commit_url) {
@@ -379,7 +379,8 @@ function createNewCommitElement(index, sub_index, commiter, message, date, commi
     var commit_date = document.createElement("a");
     commit_date.classList.add("date-title");
     commit_date.href = commit_url;
-    commit_date.innerHTML =  join(new Date(date), options, '-');
+    commit_date.target = '_blank'
+    commit_date.innerHTML = new Date(date).toLocaleString(); //join(new Date(date), options, '-');
 
     commit_ele.appendChild(commit_date);
 

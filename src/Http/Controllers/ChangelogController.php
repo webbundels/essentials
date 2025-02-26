@@ -81,7 +81,7 @@ class ChangelogController extends Controller
 
             $previous_chapter = $chapter;
 
-            if ($index == count($changelogChapters) - 1) {
+            if ($index == count($changelogChapters)) {
                 $repos = explode(',', env('GITHUB_REPOSITORIES'));
 
                 $commit_info = collect();
