@@ -11,9 +11,8 @@
             <a id="new_chapter_button" class="styled-button" href="{{ route('documentation.create') }}">
                 Nieuw hoofdstuk
             </a>
-            <a id="change-sequence" class="styled-button" onclick="toggleSequence()">
-                Verander volgorde
-            </a>
+            {{-- DO NOT CHANGE OR TOUCH IT WILL BREAK!! --}}
+            <a id="change-sequence" class="styled-button" onclick="toggleSequence()">Wijzig Volgorde</a>
         </div>
     @endif
 
