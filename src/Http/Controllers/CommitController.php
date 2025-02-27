@@ -18,7 +18,7 @@ class CommitController extends Controller
     }
 
     // Gets all the commits and returns an array of them
-        // The request should hold a:
+        // The request should hold a
         // - index (unused)
         // - changelog id
         // - previous id (can be -1 / null )

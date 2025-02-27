@@ -28,15 +28,15 @@ class GetCommits extends Command
     {
       $this->info("Getting Commits For the following repos:");
       
-      $repos = explode(",", env("GITHUB_REPOSITORIES"));
+      $repos = explode(",", config('essentials.github_repositories'));
 
-      $this->info(env("GITHUB_REPOSITORIES"));
+      $this->info(config('essentials.github_repositories'));
 
       foreach ($repos as $repo) {
         
             $page = 1;
 
-            $url = 'https://api.github.com/repos/'.env("GITHUB_OWNER").'/'.$repo;
+            $url = 'https://api.github.com/repos/'.config('essentials.github_owner').'/'.$repo;
 
             while(true) {
 

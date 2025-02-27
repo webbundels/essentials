@@ -23,7 +23,7 @@ class EssentialsServiceProvider extends ServiceProvider
       $client = new Client([
         'base_uri' => 'https://api.github.com/',
         'headers' => [
-            'Authorization' => 'Bearer '.env('GITHUB_TOKEN'),
+            'Authorization' => 'Bearer '.config('essentials.github_token'),
             'Accept' => 'application/vnd.github.v3+json',
         ],
       ]);
@@ -53,7 +53,7 @@ class EssentialsServiceProvider extends ServiceProvider
     $client = new Client([
       'base_uri' => 'https://api.github.com/',
       'headers' => [
-          'Authorization' => 'Bearer '.env('GITHUB_TOKEN'),
+          'Authorization' => 'Bearer '.config('essentials.github_token'),
           'Accept' => 'application/vnd.github.v3+json',
       ],
     ]);
@@ -106,11 +106,11 @@ class EssentialsServiceProvider extends ServiceProvider
         // If for some reason it goes wrong we call a redirect to the changelog
         //try {
 
-          $repositories = explode(',', env("GITHUB_REPOSITORIES"));
+          $repositories = explode(',', config('essentials.github_repositories'));
 
           foreach ($repositories as $repository) {
 
-            $url = 'https://api.github.com/repos/'.env("GITHUB_OWNER").'/'.$repository;
+            $url = 'https://api.github.com/repos/'.config('essentials.github_owner').'/'.$repository;
 
             EssentialsServiceProvider::refreshCommitsForRepository($repository, $url);
 
@@ -128,6 +128,10 @@ class EssentialsServiceProvider extends ServiceProvider
       $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
       $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
       $this->loadViewsFrom(__DIR__.'/../resources/views', 'EssentialsPackage');
+
+      $this->publishes([
+        __DIR__.'/../config/essentials.php' => config_path('essentials.php')
+      ]);
 
       if ($this->app->runningInConsole()) {
         $this->commands([
