@@ -1,4 +1,4 @@
-# Changelog
+# Essentials package
 
 ## Installation
 
@@ -7,7 +7,17 @@
 composer require webbundels/essentials
 ```
 
-2) Migrate the database.
+2) Add the needed arguments to your .env file
+```console
+# The token that the package will use to send requests to github to gather info.
+GITHUB_TOKEN='github_YOURTOKEN'
+# The owner of the repositories, for example: github.com/{owner}/{repo}
+GITHUB_OWNER='webbundels'
+# The repository(ies) of which the package should gather commits from seperate each repository with a ','
+GITHUB_REPOSITORIES='jongfresh-app,jongfresh-online'
+```
+
+4) Migrate the database.
 ```console
 php artisan migrate
 ```
